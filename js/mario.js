@@ -166,7 +166,9 @@ class MARIO{
       this.positionY + single_height < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 ){
 
         this.jumping = false;
-        this.positionY = platformArray[this.index].positionY - single_height;
+        if (GRAVITY > 0) {
+          this.positionY = platformArray[this.index].positionY - single_height;
+        }
         this.velocityY = 0;
         GRAVITY =2  ;
         stopOffset = 2;

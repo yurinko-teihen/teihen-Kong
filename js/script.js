@@ -122,10 +122,16 @@ let gameLoop = () => {
 }
 
 let gameWon = ()=>{
+  // Trigger win only when Mario actually touches Pauline
+  const paulineWidth = sprite_width_pauline / sprite_columns_pauline;
+  const paulineHeight = sprite_height_pauline;
 
-  if(marioPlayer.positionY  <= 50){
-afterGameWon();
-score += 100; 
+  if(marioPlayer.positionX < pauline.positionX + paulineWidth &&
+     marioPlayer.positionX + single_width > pauline.positionX &&
+     marioPlayer.positionY < pauline.positionY + paulineHeight &&
+     marioPlayer.positionY + single_height > pauline.positionY){
+    afterGameWon();
+    score += 100;
   }
 }
 

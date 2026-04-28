@@ -267,6 +267,7 @@ verticalbarrelanimate = setInterval(() => {
 
 let afterCollision = ()=>{
   ismarioalive = false;
+  ismariohammer = false;
 
     setTimeout(()=>{
       stopGameCanvas();
@@ -283,6 +284,7 @@ let afterCollision = ()=>{
 }
 
 let afterGameWon = ()=>{
+  ismariohammer = false;
   setTimeout(()=>{
     gameWonCanvas();
     hammerArray = [new HAMMER(500,390),new HAMMER(80,310)];
@@ -304,6 +306,7 @@ let updateAll = ()=>{
   marioPlayer.positionY = 517;
   score = 0;
   marioLives = 3;
+  ismariohammer = false;
 }
 
 let drawStartScreen = () => {

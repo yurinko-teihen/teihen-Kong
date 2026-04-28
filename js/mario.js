@@ -148,12 +148,14 @@ class MARIO{
       this.index = 0;
 
       if((this.positionX + single_width +20  ) > eachplatform.positionX && this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * 32 ) &&
-      this.positionY + single_height + 5< eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 ){
+      this.positionY + single_height + 5< eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 &&
+      this.velocityY >= 0){
         this.index = platformArray.indexOf(eachplatform);
       }
 
       if((this.positionX + single_width +20  ) > platformArray[this.index].positionX && this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * 35 ) &&
-      this.positionY + single_height < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 ){
+      this.positionY + single_height < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 &&
+      this.velocityY >= 0){
 
         this.jumping = false;
         if (GRAVITY > 0) {
@@ -182,7 +184,7 @@ updateFrame = ()=>{
 }
 
 let marioTrait = {
-  positionX : 150,
+  positionX : 87,
   positionY : 696,
   velocityY : 0,
   velocityX : 0,
@@ -279,8 +281,8 @@ loop = function() {
       ismarioalive = false;
       afterCollision();
     } else {
-      marioPlayer.positionX = 150;
-      marioPlayer.positionY = 517;
+      marioPlayer.positionX = 87;
+      marioPlayer.positionY = 696;
       marioPlayer.velocityY = 0;
     }
   }

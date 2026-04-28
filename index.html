@@ -298,9 +298,7 @@
 
       // START : start game or retry
       addPulseListeners(document.getElementById('btn-start'), () => {
-        if (!isGamePlaying && !isGameOver) {
-          window.handleStartRetry();
-        } else if (isGameOver) {
+        if (!isGamePlaying || isGameOver) {
           window.handleStartRetry();
         }
       });

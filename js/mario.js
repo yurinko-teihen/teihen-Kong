@@ -16,13 +16,8 @@ const sprite_width_mario = 296,
       sprite_columns_mario = 8,
       mario_framecount = 8;
 
-      let  mario_single_width ,
-          mario_single_height;
-
-mariodead_Image.addEventListener('load', (e) => {
-    mario_single_width = sprite_width_mario/sprite_columns_mario;
-    mario_single_height = sprite_height_mario/sprite_rows_mario;
-          });
+      const mario_single_width = sprite_width_mario/sprite_columns_mario;
+      const mario_single_height = sprite_height_mario/sprite_rows_mario;
 
 const sprite_width_mariohammer = 148,
       sprite_height_mariohammer = 38,
@@ -30,13 +25,8 @@ const sprite_width_mariohammer = 148,
       sprite_columns_mariohammer = 4,
       mariohammer_framecount = 4;
 
-let  mariohammer_single_width ,
-    mariohammer_single_height;
-
-mariohammer_Image.addEventListener('load', (e) => {
-      mariohammer_single_width = sprite_width_mariohammer/sprite_columns_mariohammer;
-      mariohammer_single_height = sprite_height_mariohammer/sprite_rows_mariohammer;
-            });
+const mariohammer_single_width = sprite_width_mariohammer/sprite_columns_mariohammer;
+const mariohammer_single_height = sprite_height_mariohammer/sprite_rows_mariohammer;
 
 
 class MARIO{

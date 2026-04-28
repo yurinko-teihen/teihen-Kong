@@ -365,8 +365,19 @@ window.handleStartRetry = () => {
 }
 let startGame = ()=>{
   startSound.pause();
-  barrelAnimation();
-  gameLoop();
+  new Promise((resolve, reject) => {
+    if (mario_Image.complete) {
+      resolve();
+    } else {
+      mario_Image.addEventListener('load', resolve);
+      mario_Image.addEventListener('error', reject);
+    }
+  })
+  .catch(() => {}) // proceed even if image fails to load
+  .then(() => {
+    barrelAnimation();
+    gameLoop();
+  });
 }
 
 let stopGameCanvas = () => {

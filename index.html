@@ -18,7 +18,7 @@
 
       body {
         font-family: Arial, sans-serif;
-        background-color: #000;
+        background-color: #1a1a2e;
         color: #fff;
         display: flex;
         flex-direction: column;
@@ -27,14 +27,14 @@
       
       header {
         background-color: #000;
-        padding: 8px;
+        padding: 6px;
         text-align: center;
         border-bottom: 2px solid #ff0000;
         flex-shrink: 0;
       }
       
       header h1 {
-        font-size: 18px;
+        font-size: 16px;
         color: #ff0000;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         white-space: nowrap;
@@ -48,7 +48,7 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        touch-action: none;
+        min-height: 0;
       }
       
       #canvas {
@@ -58,20 +58,144 @@
         max-height: 100%;
         width: auto;
         height: auto;
-        touch-action: none;
       }
-      
+
+      /* ===== Game Boy controller area ===== */
+      #gameboy-controls {
+        flex-shrink: 0;
+        background-color: #2c2c54;
+        padding: 10px 16px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        border-top: 3px solid #6c6ca8;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      /* D-pad side */
+      #dpad {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .dpad-btn {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        border: 3px solid #555;
+        background: radial-gradient(circle at 35% 35%, #555 0%, #222 100%);
+        color: #ccc;
+        font-size: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.05s, background 0.05s;
+      }
+
+      .dpad-btn:active,
+      .dpad-btn.pressed {
+        background: radial-gradient(circle at 35% 35%, #888 0%, #444 100%);
+        transform: scale(0.93);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+      }
+
+      /* Center START/SELECT area */
+      #center-btns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .meta-btn {
+        width: 52px;
+        height: 18px;
+        border-radius: 9px;
+        border: 2px solid #555;
+        background: linear-gradient(to bottom, #444, #222);
+        color: #aaa;
+        font-size: 9px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.05s, background 0.05s;
+      }
+
+      .meta-btn:active,
+      .meta-btn.pressed {
+        background: linear-gradient(to bottom, #666, #333);
+        transform: scale(0.93);
+      }
+
+      /* A / B action buttons */
+      #action-btns {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .action-btn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 3px solid #555;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.15);
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 0.05s, background 0.05s;
+      }
+
+      #btn-b {
+        background: radial-gradient(circle at 35% 35%, #cc3a3a 0%, #7a1a1a 100%);
+        margin-top: 18px;
+      }
+
+      #btn-a {
+        background: radial-gradient(circle at 35% 35%, #cc3a3a 0%, #7a1a1a 100%);
+      }
+
+      .action-btn:active,
+      .action-btn.pressed {
+        background: radial-gradient(circle at 35% 35%, #ff6666 0%, #aa3333 100%);
+        transform: scale(0.93);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+      }
+
+      /* Landscape: hide controls (keyboard available) */
+      @media (orientation: landscape) and (max-height: 500px) {
+        #gameboy-controls {
+          display: none;
+        }
+        #canvas {
+          height: 100%;
+          width: auto;
+        }
+      }
+
       @media (orientation: portrait) {
         #canvas {
           width: 100vw;
           height: auto;
-        }
-      }
-      
-      @media (orientation: landscape) {
-        #canvas {
-          height: 100%;
-          width: auto;
         }
       }
     </style>
@@ -84,6 +208,26 @@
     <main>
       <canvas id="canvas"></canvas>
     </main>
+
+    <!-- Game Boy-style controller -->
+    <div id="gameboy-controls">
+      <!-- Left: D-pad (←/→) -->
+      <div id="dpad">
+        <button class="dpad-btn" id="btn-left" aria-label="Left">◀</button>
+        <button class="dpad-btn" id="btn-right" aria-label="Right">▶</button>
+      </div>
+
+      <!-- Center: START -->
+      <div id="center-btns">
+        <button class="meta-btn" id="btn-start" aria-label="Start">START</button>
+      </div>
+
+      <!-- Right: B / A -->
+      <div id="action-btns">
+        <button class="action-btn" id="btn-b" aria-label="B">B</button>
+        <button class="action-btn" id="btn-a" aria-label="A">A</button>
+      </div>
+    </div>
     
     <script src="js/script.js"></script>
     <script src="js/platform.js"></script>
@@ -95,82 +239,71 @@
     <script src="js/hammer.js"></script>
     
     <script>
-      // Touch gesture controls: tap = jump, horizontal slide = move left/right
-      const SLIDE_THRESHOLD = 20; // px to recognize a slide
-      const TAP_DURATION = 300;   // ms max for a tap
-
       const triggerKeyEvent = (keyCode, eventType) => {
         window.dispatchEvent(new KeyboardEvent(eventType, {
           keyCode, which: keyCode, bubbles: true, cancelable: true
         }));
       };
 
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touchStartTime = 0;
-      let sliding = false;
-      let slideDir = null; // 'left' | 'right'
-
-      const releaseSlide = () => {
-        if (slideDir === 'left') triggerKeyEvent(37, 'keyup');
-        if (slideDir === 'right') triggerKeyEvent(39, 'keyup');
-        slideDir = null;
-        sliding = false;
+      // Hold a directional button: fire keydown and keep firing until released
+      const holdKey = (keyCode, btnEl) => {
+        triggerKeyEvent(keyCode, 'keydown');
+        btnEl.classList.add('pressed');
+      };
+      const releaseKey = (keyCode, btnEl) => {
+        triggerKeyEvent(keyCode, 'keyup');
+        btnEl.classList.remove('pressed');
       };
 
-      document.getElementById('canvas').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        const t = e.changedTouches[0];
-        touchStartX = t.clientX;
-        touchStartY = t.clientY;
-        touchStartTime = Date.now();
-        sliding = false;
-        slideDir = null;
-      }, { passive: false });
+      const addHoldListeners = (btnEl, keyCode) => {
+        const onStart = (e) => { e.preventDefault(); holdKey(keyCode, btnEl); };
+        const onEnd   = (e) => { e.preventDefault(); releaseKey(keyCode, btnEl); };
+        btnEl.addEventListener('mousedown',   onStart);
+        btnEl.addEventListener('touchstart',  onStart, { passive: false });
+        btnEl.addEventListener('mouseup',     onEnd);
+        btnEl.addEventListener('mouseleave',  onEnd);
+        btnEl.addEventListener('touchend',    onEnd,   { passive: false });
+        btnEl.addEventListener('touchcancel', onEnd,   { passive: false });
+      };
 
-      document.getElementById('canvas').addEventListener('touchmove', (e) => {
-        e.preventDefault();
-        const t = e.changedTouches[0];
-        const dx = t.clientX - touchStartX;
+      const addPulseListeners = (btnEl, onPress) => {
+        const onStart = (e) => {
+          e.preventDefault();
+          btnEl.classList.add('pressed');
+          onPress();
+        };
+        const onEnd = (e) => {
+          e.preventDefault();
+          btnEl.classList.remove('pressed');
+        };
+        btnEl.addEventListener('mousedown',   onStart);
+        btnEl.addEventListener('touchstart',  onStart, { passive: false });
+        btnEl.addEventListener('mouseup',     onEnd);
+        btnEl.addEventListener('mouseleave',  onEnd);
+        btnEl.addEventListener('touchend',    onEnd,   { passive: false });
+        btnEl.addEventListener('touchcancel', onEnd,   { passive: false });
+      };
 
-        if (Math.abs(dx) >= SLIDE_THRESHOLD) {
-          sliding = true;
-          const newDir = dx < 0 ? 'left' : 'right';
-          if (newDir !== slideDir) {
-            // Release previous direction
-            if (slideDir === 'left') triggerKeyEvent(37, 'keyup');
-            if (slideDir === 'right') triggerKeyEvent(39, 'keyup');
-            slideDir = newDir;
-            if (slideDir === 'left') triggerKeyEvent(37, 'keydown');
-            if (slideDir === 'right') triggerKeyEvent(39, 'keydown');
-          }
+      // ← / → : hold while pressed
+      addHoldListeners(document.getElementById('btn-left'),  37);
+      addHoldListeners(document.getElementById('btn-right'), 39);
+
+      // A / B : jump (space)
+      const jumpPress = () => {
+        triggerKeyEvent(32, 'keydown');
+        setTimeout(() => triggerKeyEvent(32, 'keyup'), 120);
+      };
+      addPulseListeners(document.getElementById('btn-a'), jumpPress);
+      addPulseListeners(document.getElementById('btn-b'), jumpPress);
+
+      // START : start game or retry
+      addPulseListeners(document.getElementById('btn-start'), () => {
+        if (!isGamePlaying && !isGameOver) {
+          window.handleStartRetry();
+        } else if (isGameOver) {
+          window.handleStartRetry();
         }
-      }, { passive: false });
-
-      document.getElementById('canvas').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        const elapsed = Date.now() - touchStartTime;
-        const t = e.changedTouches[0];
-        const dx = Math.abs(t.clientX - touchStartX);
-
-        if (sliding) {
-          releaseSlide();
-        } else if (dx < SLIDE_THRESHOLD && elapsed < TAP_DURATION) {
-          // Tap: jump or start/retry
-          if (!isGamePlaying && !isGameOver) {
-            window.handleStartRetry();
-          } else if (isGameOver) {
-            window.handleStartRetry();
-          } else {
-            triggerKeyEvent(32, 'keydown');
-            setTimeout(() => triggerKeyEvent(32, 'keyup'), 100);
-          }
-        }
-      }, { passive: false });
-
-      document.getElementById('canvas').addEventListener('touchcancel', (e) => {
-        releaseSlide();
-      }, { passive: false });
+      });
     </script>
   </body>
 </html>

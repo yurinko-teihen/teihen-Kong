@@ -271,10 +271,18 @@ loop = function() {
   marioPlayer.velocityX *= 0.9;// friction
   marioPlayer.velocityY *= 0.9;// friction
 
-  // Prevent Mario from falling below the canvas
+  // If Mario falls off the bottom of the canvas, treat it as a death
   if (marioPlayer.positionY > canvas.height) {
-    marioPlayer.positionY = canvas.height - single_height;
-    marioPlayer.velocityY = 0;
+    collisionSound.play();
+    marioLives--;
+    if (marioLives <= 0) {
+      ismarioalive = false;
+      afterCollision();
+    } else {
+      marioPlayer.positionX = 150;
+      marioPlayer.positionY = 517;
+      marioPlayer.velocityY = 0;
+    }
   }
 
   platformArray.forEach((eachplatform,index)=>{

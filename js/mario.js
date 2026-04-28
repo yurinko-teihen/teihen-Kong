@@ -58,13 +58,13 @@ class MARIO{
   draw(){
     ctx.beginPath();
     if(ismarioalive && !ismariohammer )
-    ctx.drawImage(mario_Image,srcX,srcY,single_width,single_height,this.positionX,this.positionY,single_width,single_height);
+    ctx.drawImage(mario_Image,srcX,srcY,single_width,single_height,this.positionX,this.positionY,single_width * 1.5,single_height * 1.5);
     if(!ismarioalive  ){
-      ctx.drawImage(mariodead_Image, this.indexmario * mario_single_width,0, mario_single_width, mario_single_height, this.positionX, this.positionY, mario_single_width, sprite_height_mario);      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
+      ctx.drawImage(mariodead_Image, this.indexmario * mario_single_width,0, mario_single_width, mario_single_height, this.positionX, this.positionY, mario_single_width * 1.5, sprite_height_mario * 1.5);
 
     }
     if(ismariohammer && ismarioalive ){
-    ctx.drawImage(mariohammer_Image, this.indexmariohammer * mariohammer_single_width,0, mariohammer_single_width, mariohammer_single_height, this.positionX, this.positionY - 10, mariohammer_single_width , sprite_height_mariohammer );      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
+    ctx.drawImage(mariohammer_Image, this.indexmariohammer * mariohammer_single_width,0, mariohammer_single_width, mariohammer_single_height, this.positionX, this.positionY - 10, mariohammer_single_width * 1.5, sprite_height_mariohammer * 1.5 );
   }
     ctx.closePath();
   }
@@ -111,7 +111,7 @@ class MARIO{
      this.positionY + single_height > selectedLadderTop &&
      this.positionY < selectedLadderTop + selectedLadderHeight){
        GRAVITY = 0;
-      stopOffset =18;
+      stopOffset =8;
       this.positionY -= stopOffset;
     }
   }
@@ -136,7 +136,7 @@ class MARIO{
         this.positionY > selectedLadderTop - 40 && 
         this.positionY < selectedLadderTop + selectedLadderHeight){
 
-          stopOffset = 20;
+          stopOffset = 8;
           if(this.positionY  == 36 ){
             stopOffset = 0;
           }
@@ -183,7 +183,7 @@ updateFrame = ()=>{
 
 let marioTrait = {
   positionX : 150,
-  positionY : 517,
+  positionY : 696,
   velocityY : 0,
   velocityX : 0,
   jumping :true,

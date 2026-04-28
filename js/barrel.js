@@ -54,17 +54,33 @@ class BARREL {
   }
 
   updatebarrelladder(){
-    this.ladderindex = 7;
-    if (this.positionY == 130 - barrel_single_height || this.positionY == 360 - barrel_single_height || this.positionY == 595 - barrel_single_height) {
+    const rightPlatformYs = [
+      130 - barrel_single_height,  // 112
+      360 - barrel_single_height,  // 342
+      595 - barrel_single_height   // 577
+    ];
+    const leftPlatformYs = [
+      240 - barrel_single_height,  // 222
+      485 - barrel_single_height,  // 467
+      720 - barrel_single_height   // 702
+    ];
+    const allPlatformYs = [...rightPlatformYs, ...leftPlatformYs].sort((a, b) => a - b);
+
+    const onRightPlatform = rightPlatformYs.includes(this.positionY);
+    const onLeftPlatform  = leftPlatformYs.includes(this.positionY);
+
+    if (onRightPlatform && this.positionX < 500) {
       this.positionX += 7;
-    }
-
-    if (this.positionY == 240 - barrel_single_height || this.positionY == 485 - barrel_single_height || this.positionY == 720 - barrel_single_height) {
+    } else if (onLeftPlatform && this.positionX > 110) {
       this.positionX -= 7;
-    }
-
-    if ((this.positionX == 500 && !(this.positionY == 240 - barrel_single_height || this.positionY == 485 - barrel_single_height || this.positionY == 720 - barrel_single_height)) || (this.positionX == 110 && !(this.positionY == 130 - barrel_single_height || this.positionY == 360 - barrel_single_height || this.positionY == 595 - barrel_single_height))) {
-      this.positionY += 7;
+    } else {
+      // Falling: snap to the next platform below when we reach or pass it
+      const nextY = allPlatformYs.find(y => y > this.positionY);
+      if (nextY !== undefined && this.positionY + 7 >= nextY) {
+        this.positionY = nextY;
+      } else {
+        this.positionY += 7;
+      }
     }
   }
 

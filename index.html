@@ -76,10 +76,20 @@
 
       /* D-pad side */
       #dpad {
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        display: grid;
+        grid-template-areas:
+          ".    up   ."
+          "left .    right"
+          ".    down .";
+        grid-template-columns: 54px 54px 54px;
+        grid-template-rows: 54px 10px 54px;
+        gap: 0;
       }
+
+      #btn-up    { grid-area: up; }
+      #btn-left  { grid-area: left; }
+      #btn-right { grid-area: right; }
+      #btn-down  { grid-area: down; }
 
       .dpad-btn {
         width: 54px;
@@ -211,10 +221,12 @@
 
     <!-- Game Boy-style controller -->
     <div id="gameboy-controls">
-      <!-- Left: D-pad (←/→) -->
+      <!-- Left: D-pad (↑/←/→/↓) -->
       <div id="dpad">
-        <button class="dpad-btn" id="btn-left" aria-label="Left">◀</button>
+        <button class="dpad-btn" id="btn-up"    aria-label="Up">▲</button>
+        <button class="dpad-btn" id="btn-left"  aria-label="Left">◀</button>
         <button class="dpad-btn" id="btn-right" aria-label="Right">▶</button>
+        <button class="dpad-btn" id="btn-down"  aria-label="Down">▼</button>
       </div>
 
       <!-- Center: START -->
@@ -284,9 +296,11 @@
         btnEl.addEventListener('touchcancel', onEnd,   { passive: false });
       };
 
-      // ← / → : hold while pressed
+      // ← / → / ↑ / ↓ : hold while pressed
       addHoldListeners(document.getElementById('btn-left'),  37);
       addHoldListeners(document.getElementById('btn-right'), 39);
+      addHoldListeners(document.getElementById('btn-up'),    38);
+      addHoldListeners(document.getElementById('btn-down'),  40);
 
       // A / B : jump (space)
       const jumpPress = () => {

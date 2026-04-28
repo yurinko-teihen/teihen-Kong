@@ -82,7 +82,7 @@
           "left .    right"
           ".    down .";
         grid-template-columns: 54px 54px 54px;
-        grid-template-rows: 54px 10px 54px;
+        grid-template-rows: 54px 54px 54px;
         gap: 0;
       }
 
@@ -114,40 +114,6 @@
         background: radial-gradient(circle at 35% 35%, #888 0%, #444 100%);
         transform: scale(0.93);
         box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
-      }
-
-      /* Center START/SELECT area */
-      #center-btns {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .meta-btn {
-        width: 52px;
-        height: 18px;
-        border-radius: 9px;
-        border: 2px solid #555;
-        background: linear-gradient(to bottom, #444, #222);
-        color: #aaa;
-        font-size: 9px;
-        font-weight: bold;
-        letter-spacing: 1px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.5);
-        touch-action: none;
-        -webkit-tap-highlight-color: transparent;
-        transition: transform 0.05s, background 0.05s;
-      }
-
-      .meta-btn:active,
-      .meta-btn.pressed {
-        background: linear-gradient(to bottom, #666, #333);
-        transform: scale(0.93);
       }
 
       /* A / B action buttons */
@@ -229,11 +195,6 @@
         <button class="dpad-btn" id="btn-down"  aria-label="Down">▼</button>
       </div>
 
-      <!-- Center: START -->
-      <div id="center-btns">
-        <button class="meta-btn" id="btn-start" aria-label="Start">START</button>
-      </div>
-
       <!-- Right: B / A -->
       <div id="action-btns">
         <button class="action-btn" id="btn-b" aria-label="B">B</button>
@@ -302,20 +263,20 @@
       addHoldListeners(document.getElementById('btn-up'),    38);
       addHoldListeners(document.getElementById('btn-down'),  40);
 
-      // A / B : jump (space)
+      // A / B : jump (space), and start/retry when not playing
       const jumpPress = () => {
         triggerKeyEvent(32, 'keydown');
         setTimeout(() => triggerKeyEvent(32, 'keyup'), 120);
       };
-      addPulseListeners(document.getElementById('btn-a'), jumpPress);
-      addPulseListeners(document.getElementById('btn-b'), jumpPress);
-
-      // START : start game or retry
-      addPulseListeners(document.getElementById('btn-start'), () => {
+      const aPress = () => {
         if (!isGamePlaying || isGameOver) {
           window.handleStartRetry();
+        } else {
+          jumpPress();
         }
-      });
+      };
+      addPulseListeners(document.getElementById('btn-a'), aPress);
+      addPulseListeners(document.getElementById('btn-b'), jumpPress);
     </script>
   </body>
 </html>

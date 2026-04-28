@@ -1,22 +1,22 @@
-# 🍌 Donkey Kong GB 1994 Clone in JavaScript
+# 🍌 Maro Kong GB 1994 Clone in JavaScript
 
-A browser-based recreation of the classic **Donkey Kong** arcade game inspired by the 1994 Game Boy version. Built entirely with vanilla JavaScript and HTML5 Canvas API, this game brings the nostalgic platformer action to your web browser!
+A browser-based recreation of the classic **Maro Kong** arcade game inspired by the 1994 Game Boy version. Built entirely with vanilla JavaScript and HTML5 Canvas API, this game brings the nostalgic platformer action to your web browser!
 
 ## 📸 Screenshots
 
 ### Start Screen
-![Donkey Kong Start Screen](images/screenshot-start-screen.png)
+![Maro Kong Start Screen](images/screenshot-start-screen.png)
 
 ### Gameplay
-![Donkey Kong Gameplay](images/screenshot-gameplay.png)
+![Maro Kong Gameplay](images/screenshot-gameplay.png)
 
 ## 🎮 Game Description
 
-Help Mario climb the construction site platforms to rescue Pauline from Donkey Kong! Navigate through dangerous barrels, climb ladders, and collect hammers to defend yourself in this faithful recreation of one of gaming's most iconic titles.
+Help Maro climb the construction site platforms to rescue Pauline from Maro Kong! Navigate through dangerous barrels, climb ladders, and collect hammers to defend yourself in this faithful recreation of one of gaming's most iconic titles.
 
 ## ✨ Features
 
-- **Classic Arcade Gameplay**: Experience the authentic Donkey Kong platforming action
+- **Classic Arcade Gameplay**: Experience the authentic Maro Kong platforming action
 - **Sprite-based Animation**: Smooth character animations using sprite sheets
 - **Multiple Game Elements**:
   - Moving platforms and ladders
@@ -47,7 +47,7 @@ Donkey-Kong-GB-1994-Clone-in-JavaScript/
 ├── index.html              # Main HTML file
 ├── js/
 │   ├── script.js          # Main game loop and logic
-│   ├── mario.js           # Mario character class and controls
+│   ├── mario.js           # Maro character class and controls
 │   ├── barrel.js          # Barrel enemy objects
 │   ├── platform.js        # Platform structures
 │   ├── ladder.js          # Ladder objects
@@ -95,14 +95,14 @@ Donkey-Kong-GB-1994-Clone-in-JavaScript/
 ## 🎯 How to Play
 
 ### Objective
-Guide Mario up the platforms to reach Pauline at the top while avoiding barrels and obstacles thrown by Donkey Kong.
+Guide Maro up the platforms to reach Pauline at the top while avoiding barrels and obstacles thrown by Maro Kong.
 
 ### Controls
 
 | Key | Action |
 |-----|--------|
-| **Arrow Left** / **A** | Move Mario left |
-| **Arrow Right** / **D** | Move Mario right |
+| **Arrow Left** / **A** | Move Maro left |
+| **Arrow Right** / **D** | Move Maro right |
 | **Arrow Up** | Climb up ladders |
 | **Arrow Down** | Climb down ladders |
 | **Spacebar** | Jump |
@@ -121,7 +121,7 @@ Guide Mario up the platforms to reach Pauline at the top while avoiding barrels 
 ## 🎨 Game Mechanics
 
 ### Character Physics
-- **Gravity System**: Mario experiences realistic falling physics
+- **Gravity System**: Maro experiences realistic falling physics
 - **Platform Collision**: Precise collision detection for platforms
 - **Ladder Climbing**: Vertical movement system for ladders
 - **Jump Mechanics**: Variable jump height based on platform position
@@ -141,9 +141,9 @@ Guide Mario up the platforms to reach Pauline at the top while avoiding barrels 
 ## 🎵 Audio Features
 
 The game includes authentic sound effects:
-- **Background Music**: Classic Donkey Kong theme (plays on start/game over screens)
-- **Walking Sound**: Plays during Mario's movement
-- **Collision Sound**: Triggered when Mario is hit by a barrel
+- **Background Music**: Classic Maro Kong theme (plays on start/game over screens)
+- **Walking Sound**: Plays during Maro's movement
+- **Collision Sound**: Triggered when Maro is hit by a barrel
 
 ## 💾 Save System
 
@@ -154,8 +154,8 @@ The game includes authentic sound effects:
 ## 🖼️ Sprite Assets
 
 The game features over 50 sprite images including:
-- Mario animations (walking, jumping, hammer, death)
-- Donkey Kong sprites
+- Maro animations (walking, jumping, hammer, death)
+- Maro Kong sprites
 - Barrel variations and animations
 - Platform and ladder graphics
 - Pauline character sprite
@@ -177,7 +177,7 @@ Contributions are welcome! Feel free to:
 
 ## 📜 License
 
-This project is a fan-made recreation for educational purposes. All original Donkey Kong characters and concepts are © Nintendo.
+This project is a fan-made recreation for educational purposes. All original Maro Kong characters and concepts are © Nintendo.
 
 ## 🙏 Credits
 
@@ -188,7 +188,7 @@ This project is a fan-made recreation for educational purposes. All original Don
 ## 🔗 Links
 
 - **Repository**: [GitHub](https://github.com/Naereen/Donkey-Kong-GB-1994-Clone-in-JavaScript)
-- **Original Game**: [Donkey Kong (Wikipedia)](https://en.wikipedia.org/wiki/Donkey_Kong)
+- **Original Game**: [Maro Kong (Wikipedia)](https://en.wikipedia.org/wiki/Donkey_Kong)
 
 ---
 

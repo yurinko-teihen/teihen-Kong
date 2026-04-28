@@ -227,7 +227,7 @@ controller = {
 
 loop = function() {
 
-  if (controller.jump && marioPlayer.jumping == false) {
+  if (controller.jump && marioPlayer.jumping == false && GRAVITY != 0) {
 
     marioPlayer.velocityY -= 20;
     marioPlayer.jumping = true;

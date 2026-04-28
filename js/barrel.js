@@ -46,35 +46,35 @@ class BARREL {
 
   draw() {
     if(!this.isbarrelcollision)
-    ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width, barrel_single_height);      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
+    ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
     if(this.barrel_image == blue_barrel_Image && !this.isbarrelcollision){
-      ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width, barrel_single_height);      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
+      ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
 
     }
   }
 
   updatebarrelladder(){
     this.ladderindex = 7;
-    if (this.positionY == 110 - barrel_single_height || this.positionY == 280 - barrel_single_height || this.positionY == 450 - barrel_single_height) {
+    if (this.positionY == 130 - barrel_single_height || this.positionY == 360 - barrel_single_height || this.positionY == 595 - barrel_single_height) {
       this.positionX += 7;
     }
 
-    if (this.positionY == 190 - barrel_single_height || this.positionY == 370 - barrel_single_height || this.positionY == 540 - barrel_single_height) {
+    if (this.positionY == 240 - barrel_single_height || this.positionY == 485 - barrel_single_height || this.positionY == 720 - barrel_single_height) {
       this.positionX -= 7;
     }
 
-    if ((this.positionX == 500 && !(this.positionY == 190 - barrel_single_height || this.positionY == 370 - barrel_single_height || this.positionY == 540 - barrel_single_height)) || (this.positionX == 110 && !(this.positionY == 110 - barrel_single_height || this.positionY == 280 - barrel_single_height || this.positionY == 450 - barrel_single_height))) {
+    if ((this.positionX == 500 && !(this.positionY == 240 - barrel_single_height || this.positionY == 485 - barrel_single_height || this.positionY == 720 - barrel_single_height)) || (this.positionX == 110 && !(this.positionY == 130 - barrel_single_height || this.positionY == 360 - barrel_single_height || this.positionY == 595 - barrel_single_height))) {
       this.positionY += 7;
     }
   }
 
   updatebluebarrel() {
     this.index = 0;
-    if(this.positionX ==140 && !(this.positionY == 190 - barrel_single_height)){
+    if(this.positionX ==140 && !(this.positionY == 240 - barrel_single_height)){
     this.positionY += 7;
   }
 
-        if(this.positionY  >= marioPlayer.positionY && (this.positionY == 520 || this.positionY == 430 || this.positionY == 360 || this.positionY == 270 || this.positionY == 180 ) ){
+        if(this.positionY  >= marioPlayer.positionY && (this.positionY == 702 || this.positionY == 590 || this.positionY == 485 || this.positionY == 352 || this.positionY == 240 ) ){
           this.positionX += 7;
         }
 

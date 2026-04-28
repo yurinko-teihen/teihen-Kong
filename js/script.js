@@ -3,7 +3,7 @@ let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
 canvas.width = 650;
-canvas.height = 600;
+canvas.height = 800;
 canvas.style.display = 'block';
 canvas.style.margin = '0 auto';
 // canvas.style.marginTop = 50 + 'px';
@@ -249,7 +249,7 @@ verticalbarrelanimate;
 
 let barrelAnimation = ()=>{
   barrelpositionanimate = setInterval(() => {
-  barrelArrayLadder.push(new BARREL(180, 92));
+  barrelArrayLadder.push(new BARREL(180, 112));
 
   if (barrelArrayLadder.length > 10 ) {
     barrelArrayLadder.splice(0, 4);
@@ -271,7 +271,7 @@ let afterCollision = ()=>{
 
     setTimeout(()=>{
       stopGameCanvas();
-      hammerArray = [new HAMMER(500,390),new HAMMER(80,310)];
+      hammerArray = [new HAMMER(500,505),new HAMMER(80,390)];
 
     },3500);
 
@@ -287,7 +287,7 @@ let afterGameWon = ()=>{
   ismariohammer = false;
   setTimeout(()=>{
     gameWonCanvas();
-    hammerArray = [new HAMMER(500,390),new HAMMER(80,310)];
+    hammerArray = [new HAMMER(500,505),new HAMMER(80,390)];
 
   },2000);
 
@@ -303,7 +303,7 @@ let afterGameWon = ()=>{
 
 let updateAll = ()=>{
   marioPlayer.positionX = 150 ;
-  marioPlayer.positionY = 517;
+  marioPlayer.positionY = 696;
   score = 0;
   marioLives = 3;
   ismariohammer = false;

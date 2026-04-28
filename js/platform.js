@@ -29,11 +29,11 @@ class PLATFORM {
 
 
 let platform = new PLATFORM(300, 60,  8);
-let platformSix = new PLATFORM(40, 110);
+let platformSix = new PLATFORM(40, 130);
 
-let platformFive = new PLATFORM(40, 190);
-let platformFour = new PLATFORM(50, 280, 33);
-let platformOne = new PLATFORM(40, 370);
-let platformTwo = new PLATFORM(50, 450,33);
-let platformThree = new PLATFORM(40, 540);
+let platformFive = new PLATFORM(40, 240);
+let platformFour = new PLATFORM(50, 360, 33);
+let platformOne = new PLATFORM(40, 485);
+let platformTwo = new PLATFORM(50, 595,33);
+let platformThree = new PLATFORM(40, 720);
 let platformArray = [platform, platformSix, platformFive, platformFour, platformOne, platformTwo, platformThree];

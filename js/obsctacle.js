@@ -30,11 +30,11 @@ class FIRE{
    }, 1000)
   }
   draw(){
-    ctx.drawImage(fire_Image, this.index * fire_single_width,0, fire_single_width, fire_single_height, this.positionX, this.positionY, fire_single_width, sprite_height_fire);      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
+    ctx.drawImage(fire_Image, this.index * fire_single_width,0, fire_single_width, fire_single_height, this.positionX, this.positionY, fire_single_width * 1.5, sprite_height_fire * 1.5);
   }
 }
 
-let fireimage = new FIRE(87,500);
+let fireimage = new FIRE(87,680);
 
 class DRUM{
   constructor(positionX,positionY){
@@ -45,4 +45,4 @@ class DRUM{
     ctx.drawImage(drum_Image,this.positionX,this.positionY);
   }
 }
-let drumimage = new DRUM(90,520);
+let drumimage = new DRUM(90,700);

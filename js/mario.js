@@ -271,6 +271,12 @@ loop = function() {
   marioPlayer.velocityX *= 0.9;// friction
   marioPlayer.velocityY *= 0.9;// friction
 
+  // Prevent Mario from falling below the canvas
+  if (marioPlayer.positionY > canvas.height) {
+    marioPlayer.positionY = canvas.height - single_height;
+    marioPlayer.velocityY = 0;
+  }
+
   platformArray.forEach((eachplatform,index)=>{
     marioPlayer.jump(eachplatform);
   })

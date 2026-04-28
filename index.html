@@ -11,30 +11,32 @@
         box-sizing: border-box;
       }
       
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
+
       body {
         font-family: Arial, sans-serif;
-        background-color: #1a1a1a;
+        background-color: #000;
         color: #fff;
         display: flex;
         flex-direction: column;
-        min-height: 100vh;
+        height: 100dvh;
       }
       
       header {
         background-color: #000;
-        padding: 15px;
+        padding: 8px;
         text-align: center;
-        border-bottom: 3px solid #ff0000;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
+        border-bottom: 2px solid #ff0000;
+        flex-shrink: 0;
       }
       
       header h1 {
-        font-size: 24px;
+        font-size: 18px;
         color: #ff0000;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-        width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -43,189 +45,33 @@
       main {
         flex: 1;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        padding: 10px;
+        justify-content: center;
+        overflow: hidden;
+        touch-action: none;
       }
       
       #canvas {
         display: block;
-        margin: 10px auto;
         background-color: black;
         max-width: 100%;
+        max-height: 100%;
+        width: auto;
         height: auto;
+        touch-action: none;
       }
       
-      .controls-section {
-        width: 100%;
-        max-width: 650px;
-        margin: 10px auto;
-        background-color: #2a2a2a;
-        border-radius: 8px;
-        padding: 15px;
-      }
-      
-      .controls-section h2 {
-        color: #ff0000;
-        font-size: 18px;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-      
-      .keyboard-controls {
-        background-color: #1a1a1a;
-        border-radius: 5px;
-        padding: 12px;
-        margin-bottom: 15px;
-      }
-      
-      .keyboard-controls h3 {
-        color: #00ff00;
-        font-size: 16px;
-        margin-bottom: 8px;
-      }
-      
-      .keyboard-controls table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      
-      .keyboard-controls td {
-        padding: 6px;
-        border-bottom: 1px solid #444;
-      }
-      
-      .keyboard-controls td:first-child {
-        font-weight: bold;
-        color: #ffaa00;
-        width: 40%;
-      }
-      
-      .keyboard-controls td:last-child {
-        color: #ccc;
-      }
-      
-      .mobile-controls {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 10px;
-      }
-      
-      .control-btn {
-        background: linear-gradient(145deg, #3a3a3a, #2a2a2a);
-        border: 2px solid #555;
-        border-radius: 8px;
-        color: #fff;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 15px;
-        cursor: pointer;
-        touch-action: manipulation;
-        user-select: none;
-        transition: all 0.1s;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      }
-      
-      .control-btn:active {
-        background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-        transform: translateY(2px);
-        box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-      }
-      
-      .control-btn.primary {
-        background: linear-gradient(145deg, #ff2020, #cc0000);
-        border-color: #ff4444;
-      }
-      
-      .control-btn.primary:active {
-        background: linear-gradient(145deg, #cc0000, #990000);
-      }
-      
-      .control-btn.jump {
-        background: linear-gradient(145deg, #00cc00, #009900);
-        border-color: #00ff00;
-      }
-      
-      .control-btn.jump:active {
-        background: linear-gradient(145deg, #009900, #006600);
-      }
-      
-      .btn-up {
-        grid-column: 2;
-      }
-      
-      .btn-left {
-        grid-column: 1;
-        grid-row: 2;
-      }
-      
-      .btn-down {
-        grid-column: 2;
-        grid-row: 2;
-      }
-      
-      .btn-right {
-        grid-column: 3;
-        grid-row: 2;
-      }
-      
-      .btn-jump {
-        grid-column: 1 / 3;
-        grid-row: 3;
-      }
-      
-      .btn-enter {
-        grid-column: 1 / -1;
-        grid-row: 4;
-        font-size: 16px;
-        padding: 20px;
-      }
-      
-      footer {
-        background-color: #000;
-        padding: 15px;
-        text-align: center;
-        border-top: 3px solid #ff0000;
-        margin-top: auto;
-      }
-      
-      footer p {
-        font-size: 12px;
-        color: #888;
-        margin: 5px 0;
-      }
-      
-      footer a {
-        color: #ff0000;
-        text-decoration: none;
-      }
-      
-      footer a:hover {
-        text-decoration: underline;
-      }
-      
-      @media (max-width: 768px) {
-        header h1 {
-          font-size: 18px;
-        }
-        
+      @media (orientation: portrait) {
         #canvas {
-          max-height: 40vh;
+          width: 100vw;
+          height: auto;
+        }
+      }
+      
+      @media (orientation: landscape) {
+        #canvas {
+          height: 100%;
           width: auto;
-          object-fit: contain;
-        }
-        
-        main {
-          overflow-y: auto;
-        }
-        
-        .controls-section {
-          padding: 10px;
-        }
-        
-        .control-btn {
-          font-size: 12px;
-          padding: 12px;
         }
       }
     </style>
@@ -237,61 +83,7 @@
     
     <main>
       <canvas id="canvas"></canvas>
-      
-      <div class="controls-section">
-        <h2>📱 Touch Controls (Mobile)</h2>
-        
-        <div class="mobile-controls">
-          <button class="control-btn btn-up" id="btn-up">⬆️<br>UP</button>
-          <button class="control-btn btn-left" id="btn-left">⬅️<br>LEFT</button>
-          <button class="control-btn btn-down" id="btn-down">⬇️<br>DOWN</button>
-          <button class="control-btn btn-right" id="btn-right">➡️<br>RIGHT</button>
-          <button class="control-btn jump btn-jump" id="btn-jump">🦘 JUMP</button>
-          <button class="control-btn primary btn-enter" id="btn-enter">▶️ START / RETRY</button>
-        </div>
-      </div>
-      
-      <div class="controls-section">
-        <h2>📋 Game Controls</h2>
-        
-        <div class="keyboard-controls">
-          <h3>⌨️ Keyboard Controls</h3>
-          <table>
-            <tr>
-              <td>Arrow Left / A</td>
-              <td>Move Mario left</td>
-            </tr>
-            <tr>
-              <td>Arrow Right / D</td>
-              <td>Move Mario right</td>
-            </tr>
-            <tr>
-              <td>Arrow Up</td>
-              <td>Climb up ladders</td>
-            </tr>
-            <tr>
-              <td>Arrow Down</td>
-              <td>Climb down ladders</td>
-            </tr>
-            <tr>
-              <td>Spacebar</td>
-              <td>Jump</td>
-            </tr>
-            <tr>
-              <td>Enter</td>
-              <td>Start game / Retry</td>
-            </tr>
-          </table>
-        </div>
-      </div>
     </main>
-    
-    <footer>
-      <p><strong>© 2024 Original Clone by <a href="https://github.com/ujwalbqcal" target="_blank">ujwalbqcal</a></strong></p>
-      <p>Maintained by <a href="https://github.com/Naereen" target="_blank">@Naereen</a></p>
-      <p>Licensed under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a></p>
-      <p>Original Donkey Kong game © Nintendo (1981-1994)</p>
-    </footer>
     
     <script src="js/script.js"></script>
     <script src="js/platform.js"></script>
@@ -303,91 +95,82 @@
     <script src="js/hammer.js"></script>
     
     <script>
-      // Mobile control buttons - simulate keyboard events
-      const triggerKeyEvent = (keyCode, eventType = 'keydown') => {
-        const event = new KeyboardEvent(eventType, {
-          keyCode: keyCode,
-          which: keyCode,
-          bubbles: true,
-          cancelable: true
-        });
-        window.dispatchEvent(event);
+      // Touch gesture controls: tap = jump, horizontal slide = move left/right
+      const SLIDE_THRESHOLD = 20; // px to recognize a slide
+      const TAP_DURATION = 300;   // ms max for a tap
+
+      const triggerKeyEvent = (keyCode, eventType) => {
+        window.dispatchEvent(new KeyboardEvent(eventType, {
+          keyCode, which: keyCode, bubbles: true, cancelable: true
+        }));
       };
-      
-      // Button event handlers
-      document.getElementById('btn-left').addEventListener('touchstart', (e) => {
+
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
+      let sliding = false;
+      let slideDir = null; // 'left' | 'right'
+
+      const releaseSlide = () => {
+        if (slideDir === 'left') triggerKeyEvent(37, 'keyup');
+        if (slideDir === 'right') triggerKeyEvent(39, 'keyup');
+        slideDir = null;
+        sliding = false;
+      };
+
+      document.getElementById('canvas').addEventListener('touchstart', (e) => {
         e.preventDefault();
-        triggerKeyEvent(37, 'keydown');
-      });
-      document.getElementById('btn-left').addEventListener('touchend', (e) => {
+        const t = e.changedTouches[0];
+        touchStartX = t.clientX;
+        touchStartY = t.clientY;
+        touchStartTime = Date.now();
+        sliding = false;
+        slideDir = null;
+      }, { passive: false });
+
+      document.getElementById('canvas').addEventListener('touchmove', (e) => {
         e.preventDefault();
-        triggerKeyEvent(37, 'keyup');
-      });
-      
-      document.getElementById('btn-right').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(39, 'keydown');
-      });
-      document.getElementById('btn-right').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(39, 'keyup');
-      });
-      
-      document.getElementById('btn-up').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(38, 'keydown');
-      });
-      document.getElementById('btn-up').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(38, 'keyup');
-      });
-      
-      document.getElementById('btn-down').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(40, 'keydown');
-      });
-      document.getElementById('btn-down').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(40, 'keyup');
-      });
-      
-      document.getElementById('btn-jump').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(32, 'keydown');
-      });
-      document.getElementById('btn-jump').addEventListener('touchend', (e) => {
-        e.preventDefault();
-        triggerKeyEvent(32, 'keyup');
-      });
-      
-      document.getElementById('btn-enter').addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        if (typeof window.handleStartRetry === 'function') {
-          window.handleStartRetry();
+        const t = e.changedTouches[0];
+        const dx = t.clientX - touchStartX;
+
+        if (Math.abs(dx) >= SLIDE_THRESHOLD) {
+          sliding = true;
+          const newDir = dx < 0 ? 'left' : 'right';
+          if (newDir !== slideDir) {
+            // Release previous direction
+            if (slideDir === 'left') triggerKeyEvent(37, 'keyup');
+            if (slideDir === 'right') triggerKeyEvent(39, 'keyup');
+            slideDir = newDir;
+            if (slideDir === 'left') triggerKeyEvent(37, 'keydown');
+            if (slideDir === 'right') triggerKeyEvent(39, 'keydown');
+          }
         }
-      });
-      
-      // Also support mouse clicks for desktop testing
-      document.getElementById('btn-left').addEventListener('mousedown', () => triggerKeyEvent(37, 'keydown'));
-      document.getElementById('btn-left').addEventListener('mouseup', () => triggerKeyEvent(37, 'keyup'));
-      
-      document.getElementById('btn-right').addEventListener('mousedown', () => triggerKeyEvent(39, 'keydown'));
-      document.getElementById('btn-right').addEventListener('mouseup', () => triggerKeyEvent(39, 'keyup'));
-      
-      document.getElementById('btn-up').addEventListener('mousedown', () => triggerKeyEvent(38, 'keydown'));
-      document.getElementById('btn-up').addEventListener('mouseup', () => triggerKeyEvent(38, 'keyup'));
-      
-      document.getElementById('btn-down').addEventListener('mousedown', () => triggerKeyEvent(40, 'keydown'));
-      document.getElementById('btn-down').addEventListener('mouseup', () => triggerKeyEvent(40, 'keyup'));
-      
-      document.getElementById('btn-jump').addEventListener('mousedown', () => triggerKeyEvent(32, 'keydown'));
-      document.getElementById('btn-jump').addEventListener('mouseup', () => triggerKeyEvent(32, 'keyup'));
-      
-      document.getElementById('btn-enter').addEventListener('click', () => {
-        if (typeof window.handleStartRetry === 'function') {
-          window.handleStartRetry();
+      }, { passive: false });
+
+      document.getElementById('canvas').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        const elapsed = Date.now() - touchStartTime;
+        const t = e.changedTouches[0];
+        const dx = Math.abs(t.clientX - touchStartX);
+
+        if (sliding) {
+          releaseSlide();
+        } else if (dx < SLIDE_THRESHOLD && elapsed < TAP_DURATION) {
+          // Tap: jump or start/retry
+          if (!isGamePlaying && !isGameOver) {
+            window.handleStartRetry();
+          } else if (isGameOver) {
+            window.handleStartRetry();
+          } else {
+            triggerKeyEvent(32, 'keydown');
+            setTimeout(() => triggerKeyEvent(32, 'keyup'), 100);
+          }
         }
-      });
+      }, { passive: false });
+
+      document.getElementById('canvas').addEventListener('touchcancel', (e) => {
+        releaseSlide();
+      }, { passive: false });
     </script>
   </body>
 </html>

@@ -33,10 +33,10 @@ let trackRight = 0,
   right = true,
   ismarioalive = true,
   ismariohammer = false,
-  isGamePlaying ,
-  isGameOver,
+  isGamePlaying = false,
+  isGameOver = false,
   speed = 3,
-  score,
+  score = 0,
   gameclearance,
   highscore,
   marioLives = 3;
@@ -62,21 +62,18 @@ let gameLoop = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     displayScore();
 
-    ladderArray.forEach((eachladder, index) => {
-
+    ladderArray.forEach((eachladder) => {
       eachladder.draw();
     })
 
-    ladderArraynext.forEach((eachladdernext, index) => {
+    ladderArraynext.forEach((eachladdernext) => {
       eachladdernext.draw();
     })
 
-    platformArray.forEach(( eachplatform, index) => {
+    platformArray.forEach((eachplatform) => {
       eachplatform.draw();
-      // scoreCard(eachplatform);
-
     })
-    hammerArray.forEach((eachhammer,index) =>{
+    hammerArray.forEach((eachhammer) =>{
       eachhammer.draw();
       hammerCollision(eachhammer);
     })
@@ -156,90 +153,50 @@ let hammerCollision = (eachhammer)=>{
 }
 
 let collisionDetection = (eachbarrelladder)=>{
-  let index = 0;
-
-  if(marioPlayer.positionX < eachbarrelladder.positionX + ladder_Image.width &&
-     marioPlayer.positionX+ single_width >  eachbarrelladder.positionX &&
-     marioPlayer.positionY < eachbarrelladder.positionY + ladder_Image.height &&
-     marioPlayer.positionY + single_height > eachbarrelladder.positionY )
-{
-  if (localStorage.getItem('highscore') < score) {
-      localStorage.setItem('highscore', score);
-    }
-    eachbarrelladder.isbarrelcollision = true;
-    index = barrelArrayLadder.indexOf(eachbarrelladder);
-    barrelArrayLadder.splice(index,1);
-    score += 10;
-
-  if(!ismariohammer){
-    collisionSound.play();
-    // Decrease life instead of instant death
-    marioLives--;
-    if (marioLives <= 0) {
-      // Only trigger death when all lives are lost
-      ismarioalive = false;
-      afterCollision();
-    }
-  }
-  if(ismariohammer)
-  ismarioalive = true;
-  return true;
-}
-return false;
+  return collisionDetectionBarrel(eachbarrelladder, barrelArrayLadder);
 }
 let collisionDetectionBlue = (eachbluebarrel)=>{
-  let index = 0;
-  if(marioPlayer.positionX < eachbluebarrel.positionX + ladder_Image.width &&
-        marioPlayer.positionX+ single_width >  eachbluebarrel.positionX &&
-        marioPlayer.positionY < eachbluebarrel.positionY + ladder_Image.height &&
-        marioPlayer.positionY + single_height > eachbluebarrel.positionY )
-{
-  if (localStorage.getItem('highscore') < score) {
+  return collisionDetectionBarrel(eachbluebarrel, barrelArraynext);
+}
+
+let collisionDetectionBarrel = (barrel, barrelArray)=>{
+  const bw = barrel_single_width * 1.5;
+  const bh = barrel_single_height * 1.5;
+
+  if(marioPlayer.positionX < barrel.positionX + bw &&
+     marioPlayer.positionX + single_width > barrel.positionX &&
+     marioPlayer.positionY < barrel.positionY + bh &&
+     marioPlayer.positionY + single_height > barrel.positionY)
+  {
+    if (localStorage.getItem('highscore') < score) {
       localStorage.setItem('highscore', score);
     }
 
-    eachbluebarrel.isbarrelcollision = true;
-    index = barrelArraynext.indexOf(eachbluebarrel);
-    barrelArraynext.splice(index,1);
+    barrel.isbarrelcollision = true;
+    const index = barrelArray.indexOf(barrel);
+    barrelArray.splice(index, 1);
     score += 10;
 
-  if(!ismariohammer){
-    collisionSound.play();
-    // Decrease life instead of instant death
-    marioLives--;
-    if (marioLives <= 0) {
-      // Only trigger death when all lives are lost
-      ismarioalive = false;
-      afterCollision();
+    if(!ismariohammer){
+      collisionSound.play();
+      marioLives--;
+      if (marioLives <= 0) {
+        ismarioalive = false;
+        afterCollision();
+      }
+    } else {
+      ismarioalive = true;
     }
+    return true;
   }
-  if(ismariohammer)
-  ismarioalive = true;
-  return true;
-}
-return false;
+  return false;
 }
 
-let storeScore = [];
-    score = 0;
-// let scoreCard = (eachbarrelladder)=>{
-//   if(eachbarrelladder.positionX + barrel_single_width > marioPlayer.positionX){
-//     if(storeScore.indexOf(eachbarrelladder)){
-//       storeScore.push(eachbarrelladder);
-//     }
-//     score = storeScore.length;
-//   }
-//
-// }
 let displayScore = ()=>{
-  ctx.beginPath();
   ctx.fillStyle = 'red';
   ctx.font = "20px Arial";
-  // Display lives (hearts) before the score
   let heartsText = '❤️'.repeat(marioLives);
-  // X position adjusted to 450 to accommodate hearts display
   ctx.fillText(heartsText + " Score : " + score ,450,40);
-  ctx.closePath();
 }
 
 

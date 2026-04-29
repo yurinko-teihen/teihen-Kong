@@ -28,12 +28,12 @@ class PLATFORM {
 }
 
 
-let platform = new PLATFORM(300, 60,  8);
-let platformSix = new PLATFORM(40, 130);
+let platform = new PLATFORM(300, 100,  8);
+let platformSix = new PLATFORM(40, 170);
 
-let platformFive = new PLATFORM(40, 240);
-let platformFour = new PLATFORM(50, 360, 33);
-let platformOne = new PLATFORM(40, 485);
-let platformTwo = new PLATFORM(50, 595,33);
-let platformThree = new PLATFORM(40, 720);
+let platformFive = new PLATFORM(40, 280);
+let platformFour = new PLATFORM(50, 400, 33);
+let platformOne = new PLATFORM(40, 525);
+let platformTwo = new PLATFORM(50, 635,33);
+let platformThree = new PLATFORM(40, 760);
 let platformArray = [platform, platformSix, platformFive, platformFour, platformOne, platformTwo, platformThree];

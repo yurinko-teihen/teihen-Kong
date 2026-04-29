@@ -15,8 +15,8 @@ class HAMMER{
     }
 }
 
-let hammerone = new HAMMER(500,505);
-let hammertwo = new HAMMER(80,390);
-let hammerthree = new HAMMER(540,260);
+let hammerone = new HAMMER(500,545);
+let hammertwo = new HAMMER(80,430);
+let hammerthree = new HAMMER(540,300);
 
 let hammerArray = [hammerone,hammertwo,hammerthree];

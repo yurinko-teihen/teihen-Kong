@@ -65,7 +65,7 @@ class MARIO{
 
     }
     if(ismariohammer && ismarioalive ){
-    ctx.drawImage(mariohammer_Image, this.indexmariohammer * mariohammer_single_width,0, mariohammer_single_width, mariohammer_single_height, this.positionX, this.positionY - 10, single_width * SPRITE_SCALE, single_height * SPRITE_SCALE );
+    ctx.drawImage(mariohammer_Image, this.indexmariohammer * mariohammer_single_width,0, mariohammer_single_width, mariohammer_single_height, this.positionX, this.positionY - 10, mariohammer_single_width * SPRITE_SCALE, mariohammer_single_height * SPRITE_SCALE );
   }
     ctx.closePath();
   }

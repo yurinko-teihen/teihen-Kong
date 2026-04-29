@@ -37,7 +37,7 @@ class MARIO{
     this.velocityY = mario.velocityY;
     this.velocityX = mario.velocityX;
     this.jumping = true;
-    this.ladder = true;
+    this.onLadder = false;
     this.indexmario = 0;
     this.indexmariohammer = 0;
     this.currentPlatformRightEdge = canvas.width - single_width * 2;
@@ -81,6 +81,7 @@ class MARIO{
         this.positionX = rightLimit;
       }
     }
+    this._restoreGravityIfOffLadder();
   }
 
   moveLeft(){
@@ -90,6 +91,28 @@ class MARIO{
     // Stop twice the sprite width before the edge
     if (this.positionX > single_width * 2) {
       this.positionX -= speed;
+    }
+    this._restoreGravityIfOffLadder();
+  }
+
+  _isOverlappingLadder(ladder) {
+    const ladderHeight = ladder_Image.height * ladder.height;
+    const ladderBottom = ladder.positionY + ladderHeight;
+    // +20px horizontal tolerance matches the grab range used in moveUp/moveDown
+    return (this.positionX + single_width + 20) > ladder.positionX &&
+      this.positionX < (ladder.positionX + ladder_Image.width) &&
+      this.positionY < ladderBottom &&
+      this.positionY + single_height * 1.5 > ladder.positionY;
+  }
+
+  _restoreGravityIfOffLadder() {
+    if (GRAVITY !== 0 || !this.onLadder) return;
+    const stillOnLadder = ladderArray.some(l => this._isOverlappingLadder(l));
+    if (!stillOnLadder) {
+      GRAVITY = 2;
+      stopOffset = 2;
+      this.jumping = true;
+      this.onLadder = false;
     }
   }
 
@@ -108,6 +131,7 @@ class MARIO{
 
     GRAVITY = 0;
     stopOffset = 8;
+    this.onLadder = true;
     this.positionY -= stopOffset;
 
     const marioFeet = this.positionY + single_height * 1.5;
@@ -117,6 +141,7 @@ class MARIO{
         this.positionY = platformAbove.positionY - single_height * 1.5;
         this.velocityY = 0;
         this.jumping = false;
+        this.onLadder = false;
         GRAVITY = 2;
         stopOffset = 2;
         this.currentPlatformRightEdge = platformAbove.positionX + platformAbove.platform_Image.width * platformAbove.width;
@@ -146,6 +171,7 @@ class MARIO{
 
           GRAVITY = 0;
           stopOffset = 8;
+          this.onLadder = true;
           if(this.positionY  == 36 ){
             stopOffset = 0;
           }
@@ -167,6 +193,7 @@ class MARIO{
       this.velocityY >= 0){
 
         this.jumping = false;
+        this.onLadder = false;
         this.positionY = platformArray[this.index].positionY - single_height * 1.5;
         this.velocityY = 0;
         GRAVITY =2  ;

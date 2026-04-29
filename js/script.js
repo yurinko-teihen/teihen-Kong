@@ -3,7 +3,7 @@ let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 
 canvas.width = 650;
-canvas.height = 800;
+canvas.height = 840;
 canvas.style.display = 'block';
 canvas.style.margin = '0 auto';
 // canvas.style.marginTop = 50 + 'px';
@@ -209,7 +209,7 @@ verticalbarrelanimate;
 
 let barrelAnimation = ()=>{
   barrelpositionanimate = setInterval(() => {
-  barrelArrayLadder.push(new BARREL(310, 42));
+  barrelArrayLadder.push(new BARREL(310, 82));
 
   if (barrelArrayLadder.length > 10 ) {
     barrelArrayLadder.splice(0, 4);
@@ -217,7 +217,7 @@ let barrelAnimation = ()=>{
 }, 4000);
 
 verticalbarrelanimate = setInterval(() => {
-  barrelArraynext.push(new BARREL(140, 100, blue_barrel_Image));
+  barrelArraynext.push(new BARREL(140, 140, blue_barrel_Image));
   if(barrelArraynext.length > 7){
     barrelArraynext.splice(0,1);
   }
@@ -231,7 +231,7 @@ let afterCollision = ()=>{
 
     setTimeout(()=>{
       stopGameCanvas();
-      hammerArray = [new HAMMER(500,505),new HAMMER(80,390)];
+      hammerArray = [new HAMMER(500,545),new HAMMER(80,430)];
 
     },3500);
 
@@ -247,7 +247,7 @@ let afterGameWon = ()=>{
   ismariohammer = false;
   setTimeout(()=>{
     gameWonCanvas();
-    hammerArray = [new HAMMER(500,505),new HAMMER(80,390)];
+    hammerArray = [new HAMMER(500,545),new HAMMER(80,430)];
 
   },2000);
 
@@ -263,7 +263,7 @@ let afterGameWon = ()=>{
 
 let updateAll = ()=>{
   marioPlayer.positionX = 87 ;
-  marioPlayer.positionY = 684;
+  marioPlayer.positionY = 724;
   score = 0;
   marioLives = 3;
   ismariohammer = false;
@@ -279,6 +279,12 @@ let drawStartScreen = () => {
   ctx.drawImage(orangebarrel_Image, canvas.width - 200 ,canvas.height / 2 - banner_Image.height / 2 );
   ctx.drawImage(kong_Image, canvas.width - kong_Image.width * 3.7 ,canvas.height / 2 - banner_Image.height / 2 );
   ctx.drawImage(hammer_Image, canvas.width - 430,canvas.height / 2 +  35 );
+
+  ctx.save();
+  ctx.font = '18px Arial';
+  ctx.fillStyle = 'yellow';
+  ctx.fillText(`v1.3`, canvas.width - 40, canvas.height - 10);
+  ctx.restore();
 
   ctx.save();
   ctx.font = '24px START GAME';

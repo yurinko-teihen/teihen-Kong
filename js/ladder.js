@@ -23,26 +23,26 @@ class LADDER{
     }
 }
 
-let ladderOne = new LADDER(500,610,6);
-let ladderTwo = new LADDER(280,486,6);
-let ladderThree = new LADDER(110,500,6);
-let ladderFour = new LADDER(500,376,6);
-let ladderFive = new LADDER(340,376,6);
-let ladderSix = new LADDER(230,253,6);
-let ladderSeven = new LADDER(110,253,6);
-let ladderEight = new LADDER(500,149,6);
-let ladderNine = new LADDER(400,74,3);
-let ladderTen = new LADDER(280,33,6);
-let ladderEleven = new LADDER(230,33,6);
+let ladderOne = new LADDER(500,650,6);
+let ladderTwo = new LADDER(280,526,6);
+let ladderThree = new LADDER(110,540,6);
+let ladderFour = new LADDER(500,416,6);
+let ladderFive = new LADDER(340,416,6);
+let ladderSix = new LADDER(230,293,6);
+let ladderSeven = new LADDER(110,293,6);
+let ladderEight = new LADDER(500,189,6);
+let ladderNine = new LADDER(400,114,3);
+let ladderTen = new LADDER(280,73,6);
+let ladderEleven = new LADDER(230,73,6);
 
 let ladderArray = [
   ladderOne, ladderTwo, ladderThree, ladderFour, ladderFive,
   ladderSix, ladderSeven, ladderEight, ladderNine, ladderTen, ladderEleven
 ];
 
-let ladderTwelve = new LADDER(260,693,1);
-let ladderThirteen = new LADDER(200,459,1);
-let ladderFourteen = new LADDER(450,335,1);
-let ladderFifteen = new LADDER(290,211,1);
+let ladderTwelve = new LADDER(260,733,1);
+let ladderThirteen = new LADDER(200,499,1);
+let ladderFourteen = new LADDER(450,375,1);
+let ladderFifteen = new LADDER(290,251,1);
 
 let ladderArraynext = [ladderTwelve, ladderThirteen, ladderFourteen, ladderFifteen];

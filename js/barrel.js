@@ -56,14 +56,14 @@ class BARREL {
 
   updatebarrelladder(){
     const rightPlatformYs = [
-      130 - barrel_single_height,  // 112
-      360 - barrel_single_height,  // 342
-      595 - barrel_single_height   // 577
+      170 - barrel_single_height,  // 152
+      400 - barrel_single_height,  // 382
+      635 - barrel_single_height   // 617
     ];
     const leftPlatformYs = [
-      240 - barrel_single_height,  // 222
-      485 - barrel_single_height,  // 467
-      720 - barrel_single_height   // 702
+      280 - barrel_single_height,  // 262
+      525 - barrel_single_height,  // 507
+      760 - barrel_single_height   // 742
     ];
     const allPlatformYs = [...rightPlatformYs, ...leftPlatformYs].sort((a, b) => a - b);
 
@@ -86,11 +86,11 @@ class BARREL {
   }
 
   updatebluebarrel() {
-    if(this.positionX ==140 && !(this.positionY == 240 - barrel_single_height)){
+    if(this.positionX ==140 && !(this.positionY == 280 - barrel_single_height)){
     this.positionY += 7;
   }
 
-        if(this.positionY  >= marioPlayer.positionY && (this.positionY == 702 || this.positionY == 590 || this.positionY == 485 || this.positionY == 352 || this.positionY == 240 ) ){
+        if(this.positionY  >= marioPlayer.positionY && (this.positionY == 742 || this.positionY == 630 || this.positionY == 525 || this.positionY == 392 || this.positionY == 280 ) ){
           this.positionX += 7;
         }
 

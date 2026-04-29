@@ -34,7 +34,7 @@ class FIRE{
   }
 }
 
-let fireimage = new FIRE(87,680);
+let fireimage = new FIRE(87,720);
 
 class DRUM{
   constructor(positionX,positionY){
@@ -45,4 +45,4 @@ class DRUM{
     ctx.drawImage(drum_Image, this.positionX, this.positionY, drum_Image.width * SPRITE_SCALE, drum_Image.height * SPRITE_SCALE);
   }
 }
-let drumimage = new DRUM(87,692);
+let drumimage = new DRUM(87,732);

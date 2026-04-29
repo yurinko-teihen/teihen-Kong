@@ -146,7 +146,7 @@ class MARIO{
 
           GRAVITY = 0;
           stopOffset = 8;
-          if(this.positionY  == 36 ){
+          if(this.positionY  == 76 ){
             stopOffset = 0;
           }
         this.positionY += stopOffset;
@@ -208,7 +208,7 @@ updateFrame = ()=>{
 
 let marioTrait = {
   positionX : 87,
-  positionY : 684,
+  positionY : 724,
   velocityY : 0,
   velocityX : 0,
   jumping :true,
@@ -302,7 +302,7 @@ let loop = function() {
       afterCollision();
     } else {
       marioPlayer.positionX = 87;
-      marioPlayer.positionY = 684;
+      marioPlayer.positionY = 724;
       marioPlayer.velocityY = 0;
     }
   }

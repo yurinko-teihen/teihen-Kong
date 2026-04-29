@@ -95,28 +95,32 @@ class MARIO{
 
 
   moveUp(eachladder){
-    this.index = 0;
-    
-    // Calculate the actual ladder height
     const ladderHeight = ladder_Image.height * eachladder.height;
     const ladderBottom = eachladder.positionY + ladderHeight;
+    const isOnCurrentLadder = (this.positionX + single_width + 20) > eachladder.positionX &&
+      this.positionX < (eachladder.positionX + ladder_Image.width) &&
+      this.positionY < ladderBottom &&
+      this.positionY + single_height * 1.5 > eachladder.positionY;
 
-    if((this.positionX + single_width +20  ) > eachladder.positionX && this.positionX < (eachladder.positionX + ladder_Image.width ) &&
-     this.positionY < ladderBottom && this.positionY + single_height * 1.5 > eachladder.positionY){
-      this.index = ladderArray.indexOf(eachladder);
+    if(!isOnCurrentLadder){
+      return;
     }
 
-    // Calculate the ladder height for the selected ladder
-    const selectedLadderHeight = ladder_Image.height * ladderArray[this.index].height;
-    const selectedLadderTop = ladderArray[this.index].positionY;
-    
-    if((this.positionX + single_width  ) > ladderArray[this.index].positionX &&
-     this.positionX < (ladderArray[this.index].positionX + ladder_Image.width -10) &&
-     this.positionY + single_height * 1.5 > selectedLadderTop &&
-     this.positionY < selectedLadderTop + selectedLadderHeight){
-       GRAVITY = 0;
-      stopOffset =8;
-      this.positionY -= stopOffset;
+    GRAVITY = 0;
+    stopOffset = 8;
+    this.positionY -= stopOffset;
+
+    const marioFeet = this.positionY + single_height * 1.5;
+    if (marioFeet <= eachladder.positionY) {
+      const platformAbove = this.findPlatformAbove(eachladder);
+      if (platformAbove) {
+        this.positionY = platformAbove.positionY - single_height * 1.5;
+        this.velocityY = 0;
+        this.jumping = false;
+        GRAVITY = 2;
+        stopOffset = 2;
+        this.currentPlatformRightEdge = platformAbove.positionX + platformAbove.platform_Image.width * platformAbove.width;
+      }
     }
   }
 
@@ -152,13 +156,13 @@ class MARIO{
     jump(eachplatform){
       this.index = 0;
 
-      if((this.positionX + single_width +20  ) > eachplatform.positionX && this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * 32 ) &&
+      if((this.positionX + single_width +20  ) > eachplatform.positionX && this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * eachplatform.width ) &&
       this.positionY + single_height * 1.5 + 5 < eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 &&
       this.velocityY >= 0){
         this.index = platformArray.indexOf(eachplatform);
       }
 
-      if((this.positionX + single_width +20  ) > platformArray[this.index].positionX && this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * 35 ) &&
+      if((this.positionX + single_width +20  ) > platformArray[this.index].positionX && this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * platformArray[this.index].width ) &&
       this.positionY + single_height * 1.5 < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 &&
       this.velocityY >= 0){
 
@@ -170,6 +174,21 @@ class MARIO{
         this.currentPlatformRightEdge = platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * platformArray[this.index].width;
 
       }
+    }
+
+    findPlatformAbove(eachladder){
+      const marioLeft = this.positionX;
+      const marioRight = this.positionX + single_width;
+
+      return platformArray
+        .filter((platform) => {
+          const platformLeft = platform.positionX;
+          const platformRight = platform.positionX + platform.platform_Image.width * platform.width;
+          return platform.positionY <= eachladder.positionY &&
+            marioRight > platformLeft &&
+            marioLeft < platformRight;
+        })
+        .sort((a, b) => b.positionY - a.positionY)[0];
     }
   }
 

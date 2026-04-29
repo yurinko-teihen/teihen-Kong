@@ -22,7 +22,8 @@ const sprite_width = 264,
   single_width = sprite_width / columns,
   single_height = sprite_height / rows,
   framecount = 11,
-  SCORE_OFFSET = 100;
+  SCORE_OFFSET = 100,
+  SPRITE_SCALE = 1.5;
 
 let trackRight = 0,
   trackLeft = 1,
@@ -160,8 +161,8 @@ let collisionDetectionBlue = (eachbluebarrel)=>{
 }
 
 let collisionDetectionBarrel = (barrel, barrelArray)=>{
-  const bw = barrel_single_width * 1.5;
-  const bh = barrel_single_height * 1.5;
+  const bw = barrel_single_width * SPRITE_SCALE;
+  const bh = barrel_single_height * SPRITE_SCALE;
 
   if(marioPlayer.positionX < barrel.positionX + bw &&
      marioPlayer.positionX + single_width > barrel.positionX &&

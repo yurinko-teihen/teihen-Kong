@@ -44,13 +44,13 @@ class MARIO{
 
     setInterval(() => {
      this.indexmario++;
-     if (this.indexmario >= 8) {
+     if (this.indexmario >= mario_framecount) {
        this.indexmario = 0;
      }
    }, 100)
    setInterval(() => {
     this.indexmariohammer++;
-    if (this.indexmariohammer >= 4) {
+    if (this.indexmariohammer >= mariohammer_framecount) {
       this.indexmariohammer = 0;
     }
   }, 100)
@@ -59,13 +59,13 @@ class MARIO{
   draw(){
     ctx.beginPath();
     if(ismarioalive && !ismariohammer )
-    ctx.drawImage(mario_Image,srcX,srcY,single_width,single_height,this.positionX,this.positionY,single_width * 1.5,single_height * 1.5);
+    ctx.drawImage(mario_Image,srcX,srcY,single_width,single_height,this.positionX,this.positionY,single_width * SPRITE_SCALE,single_height * SPRITE_SCALE);
     if(!ismarioalive  ){
-      ctx.drawImage(mariodead_Image, this.indexmario * mario_single_width,0, mario_single_width, mario_single_height, this.positionX, this.positionY, mario_single_width * 1.5, sprite_height_mario * 1.5);
+      ctx.drawImage(mariodead_Image, this.indexmario * mario_single_width,0, mario_single_width, mario_single_height, this.positionX, this.positionY, mario_single_width * SPRITE_SCALE, sprite_height_mario * SPRITE_SCALE);
 
     }
     if(ismariohammer && ismarioalive ){
-    ctx.drawImage(mariohammer_Image, this.indexmariohammer * mariohammer_single_width,0, mariohammer_single_width, mariohammer_single_height, this.positionX, this.positionY - 10, mariohammer_single_width * 1.5, sprite_height_mariohammer * 1.5 );
+    ctx.drawImage(mariohammer_Image, this.indexmariohammer * mariohammer_single_width,0, mariohammer_single_width, mariohammer_single_height, this.positionX, this.positionY - 10, single_width * SPRITE_SCALE, single_height * SPRITE_SCALE );
   }
     ctx.closePath();
   }
@@ -73,8 +73,8 @@ class MARIO{
   moveRight(){
     updateFrame();
     left = false;
-    // rightLimit: keep Mario's sprite fully within the platform (1.5 = sprite scale factor)
-    const rightLimit = Math.min(this.currentPlatformRightEdge - single_width * 1.5, canvas.width - single_width);
+    // rightLimit: keep Mario's sprite fully within the platform (SPRITE_SCALE = sprite scale factor)
+    const rightLimit = Math.min(this.currentPlatformRightEdge - single_width * SPRITE_SCALE, canvas.width - single_width);
     if (this.positionX < rightLimit) {
       this.positionX += speed;
       if (this.positionX > rightLimit) {
@@ -100,7 +100,7 @@ class MARIO{
     const isOnCurrentLadder = (this.positionX + single_width + 20) > eachladder.positionX &&
       this.positionX < (eachladder.positionX + ladder_Image.width) &&
       this.positionY < ladderBottom &&
-      this.positionY + single_height * 1.5 > eachladder.positionY;
+      this.positionY + single_height * SPRITE_SCALE > eachladder.positionY;
 
     if(!isOnCurrentLadder){
       return;
@@ -110,11 +110,11 @@ class MARIO{
     stopOffset = 8;
     this.positionY -= stopOffset;
 
-    const marioFeet = this.positionY + single_height * 1.5;
+    const marioFeet = this.positionY + single_height * SPRITE_SCALE;
     if (marioFeet <= eachladder.positionY) {
       const platformAbove = this.findPlatformAbove(eachladder);
       if (platformAbove) {
-        this.positionY = platformAbove.positionY - single_height * 1.5;
+        this.positionY = platformAbove.positionY - single_height * SPRITE_SCALE;
         this.velocityY = 0;
         this.jumping = false;
         GRAVITY = 2;
@@ -157,17 +157,17 @@ class MARIO{
       this.index = 0;
 
       if((this.positionX + single_width +20  ) > eachplatform.positionX && this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * eachplatform.width ) &&
-      this.positionY + single_height * 1.5 + 5 < eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 &&
+      this.positionY + single_height * SPRITE_SCALE + 5 < eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 &&
       this.velocityY >= 0){
         this.index = platformArray.indexOf(eachplatform);
       }
 
       if((this.positionX + single_width +20  ) > platformArray[this.index].positionX && this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * platformArray[this.index].width ) &&
-      this.positionY + single_height * 1.5 < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 &&
+      this.positionY + single_height * SPRITE_SCALE < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 &&
       this.velocityY >= 0){
 
         this.jumping = false;
-        this.positionY = platformArray[this.index].positionY - single_height * 1.5;
+        this.positionY = platformArray[this.index].positionY - single_height * SPRITE_SCALE;
         this.velocityY = 0;
         GRAVITY =2  ;
         stopOffset = 2;

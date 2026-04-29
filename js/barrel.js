@@ -45,11 +45,11 @@ class BARREL {
 
 
   draw() {
-    if(!this.isbarrelcollision)
-    ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
-    if(this.barrel_image == blue_barrel_Image && !this.isbarrelcollision){
+    if (this.isbarrelcollision) return;
+    if (this.barrel_image === blue_barrel_Image) {
       ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
-
+    } else {
+      ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
     }
   }
 
@@ -85,7 +85,6 @@ class BARREL {
   }
 
   updatebluebarrel() {
-    this.index = 0;
     if(this.positionX ==140 && !(this.positionY == 240 - barrel_single_height)){
     this.positionY += 7;
   }

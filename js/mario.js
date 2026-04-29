@@ -211,6 +211,7 @@ let controller = {
       break;
       case 65:
       controller.left = key_state;
+      break;
       case 32:// up key
         controller.jump = key_state;
       break;
@@ -252,7 +253,7 @@ let loop = function() {
   }
 
   if(controller.moveUp){
-    ladderArray.forEach((eachladder,index)=>{
+    ladderArray.forEach((eachladder)=>{
       marioPlayer.moveUp(eachladder);
       walkingSound.play();
 
@@ -260,7 +261,7 @@ let loop = function() {
   }
 
   if(controller.moveDown){
-    ladderArray.forEach((eachladder,index)=>{
+    ladderArray.forEach((eachladder)=>{
       marioPlayer.moveDown(eachladder);
       walkingSound.play();
 
@@ -287,7 +288,7 @@ let loop = function() {
     }
   }
 
-  platformArray.forEach((eachplatform,index)=>{
+  platformArray.forEach((eachplatform)=>{
     marioPlayer.jump(eachplatform);
   })
 

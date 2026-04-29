@@ -159,7 +159,7 @@ class MARIO{
 
         this.jumping = false;
         if (GRAVITY > 0) {
-          this.positionY = platformArray[this.index].positionY - single_height;
+          this.positionY = platformArray[this.index].positionY - single_height * 1.5;
         }
         this.velocityY = 0;
         GRAVITY =2  ;
@@ -185,7 +185,7 @@ updateFrame = ()=>{
 
 let marioTrait = {
   positionX : 87,
-  positionY : 696,
+  positionY : 684,
   velocityY : 0,
   velocityX : 0,
   jumping :true,
@@ -282,7 +282,7 @@ loop = function() {
       afterCollision();
     } else {
       marioPlayer.positionX = 87;
-      marioPlayer.positionY = 696;
+      marioPlayer.positionY = 684;
       marioPlayer.velocityY = 0;
     }
   }

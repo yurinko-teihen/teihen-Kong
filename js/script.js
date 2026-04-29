@@ -309,7 +309,7 @@ let afterGameWon = ()=>{
 
 let updateAll = ()=>{
   marioPlayer.positionX = 87 ;
-  marioPlayer.positionY = 696;
+  marioPlayer.positionY = 684;
   score = 0;
   marioLives = 3;
   ismariohammer = false;

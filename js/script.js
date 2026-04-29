@@ -208,7 +208,7 @@ verticalbarrelanimate;
 
 let barrelAnimation = ()=>{
   barrelpositionanimate = setInterval(() => {
-  barrelArrayLadder.push(new BARREL(180, 112));
+  barrelArrayLadder.push(new BARREL(310, 42));
 
   if (barrelArrayLadder.length > 10 ) {
     barrelArrayLadder.splice(0, 4);

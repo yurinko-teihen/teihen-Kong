@@ -63,4 +63,4 @@ class ENEMY{
 
 
 let enemy = new ENEMY(310,-32);
-let pauline = new ENEMY(300,33);
+let pauline = new ENEMY(40,103);

@@ -9,7 +9,8 @@ const SPRITE_WIDTH_BARREL = 72,
   SPRITE_HEIGHT_BARREL = 18,
   BARREL_ROWS = 1,
   BARREL_COLUMNS = 4,
-  BARREL_FRAMECOUNT = 4;
+  BARREL_FRAMECOUNT = 4,
+  BLUE_BARREL_FRAMECOUNT = 2;
 
 let barrel_single_width,
   barrel_single_height,
@@ -31,13 +32,13 @@ class BARREL {
 
     setInterval(() => {
       this.index++;
-      if (this.index >= 4) {
+      if (this.index >= BARREL_FRAMECOUNT) {
         this.index = 0;
       }
     }, 200)
     setInterval(() => {
       this.indexblue++;
-      if (this.indexblue >= 2) {
+      if (this.indexblue >= BLUE_BARREL_FRAMECOUNT) {
         this.indexblue = 0;
       }
     }, 200)
@@ -47,9 +48,9 @@ class BARREL {
   draw() {
     if (this.isbarrelcollision) return;
     if (this.barrel_image === blue_barrel_Image) {
-      ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
+      ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * SPRITE_SCALE, barrel_single_height * SPRITE_SCALE);
     } else {
-      ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
+      ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * SPRITE_SCALE, barrel_single_height * SPRITE_SCALE);
     }
   }
 

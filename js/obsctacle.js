@@ -30,7 +30,7 @@ class FIRE{
    }, 1000)
   }
   draw(){
-    ctx.drawImage(fire_Image, this.index * fire_single_width,0, fire_single_width, fire_single_height, this.positionX, this.positionY, fire_single_width * 1.5, sprite_height_fire * 1.5);
+    ctx.drawImage(fire_Image, this.index * fire_single_width,0, fire_single_width, fire_single_height, this.positionX, this.positionY, fire_single_width * SPRITE_SCALE, sprite_height_fire * SPRITE_SCALE);
   }
 }
 

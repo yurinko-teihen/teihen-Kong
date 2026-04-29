@@ -39,13 +39,13 @@ class ENEMY{
 
     setInterval(() => {
      this.index++;
-     if (this.index >= 5) {
+     if (this.index >= enemy_framecount) {
        this.index = 0;
      }
    }, 1000)
    setInterval(() => {
     this.secondindex++;
-    if (this.secondindex >= 4) {
+    if (this.secondindex >= pauline_framecount) {
       this.secondindex = 0;
     }
   }, 1000)
@@ -56,7 +56,7 @@ class ENEMY{
 
   }
   drawpauline(){
-    ctx.drawImage(pauline_Image, this.secondindex * pauline_single_width,0, pauline_single_width, pauline_single_height, this.positionX, this.positionY, pauline_single_width, sprite_height_pauline);      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
+    ctx.drawImage(pauline_Image, this.secondindex * pauline_single_width,0, pauline_single_width, pauline_single_height, this.positionX, this.positionY, pauline_single_width * SPRITE_SCALE, sprite_height_pauline * SPRITE_SCALE);      // ctx.fillRect(this.positionX,this.positionY,this.width,this.height);
 
   }
 }

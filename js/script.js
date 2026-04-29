@@ -82,8 +82,8 @@ let gameLoop = () => {
     marioPlayer.draw();
     enemy.draw();
     pauline.drawpauline();
-    fireimage.draw();
     drumimage.draw();
+    fireimage.draw();
     gameWon();
 
     for(let eachbluebarrel of barrelArraynext) {

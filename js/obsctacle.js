@@ -42,7 +42,7 @@ class DRUM{
     this.positionY = positionY;
 }
   draw(){
-    ctx.drawImage(drum_Image,this.positionX,this.positionY);
+    ctx.drawImage(drum_Image, this.positionX, this.positionY, drum_Image.width * SPRITE_SCALE, drum_Image.height * SPRITE_SCALE);
   }
 }
-let drumimage = new DRUM(90,700);
+let drumimage = new DRUM(87,692);

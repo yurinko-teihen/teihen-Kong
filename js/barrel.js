@@ -9,7 +9,8 @@ const SPRITE_WIDTH_BARREL = 72,
   SPRITE_HEIGHT_BARREL = 18,
   BARREL_ROWS = 1,
   BARREL_COLUMNS = 4,
-  BARREL_FRAMECOUNT = 4;
+  BARREL_FRAMECOUNT = 4,
+  BARREL_SCALE = 1.5;
 
 let barrel_single_width,
   barrel_single_height,
@@ -47,22 +48,23 @@ class BARREL {
   draw() {
     if (this.isbarrelcollision) return;
     if (this.barrel_image === blue_barrel_Image) {
-      ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
+      ctx.drawImage(this.barrel_image, this.indexblue * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * BARREL_SCALE, barrel_single_height * BARREL_SCALE);
     } else {
-      ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * 1.5, barrel_single_height * 1.5);
+      ctx.drawImage(this.barrel_image, this.index * barrel_single_width, 0, barrel_single_width, barrel_single_height, this.positionX, this.positionY, barrel_single_width * BARREL_SCALE, barrel_single_height * BARREL_SCALE);
     }
   }
 
   updatebarrelladder(){
+    const barrelDrawHeight = barrel_single_height * BARREL_SCALE;
     const rightPlatformYs = [
-      130 - barrel_single_height,  // 112
-      360 - barrel_single_height,  // 342
-      595 - barrel_single_height   // 577
+      130 - barrelDrawHeight,  // 103
+      360 - barrelDrawHeight,  // 333
+      595 - barrelDrawHeight   // 568
     ];
     const leftPlatformYs = [
-      240 - barrel_single_height,  // 222
-      485 - barrel_single_height,  // 467
-      720 - barrel_single_height   // 702
+      240 - barrelDrawHeight,  // 213
+      485 - barrelDrawHeight,  // 458
+      720 - barrelDrawHeight   // 693
     ];
     const allPlatformYs = [...rightPlatformYs, ...leftPlatformYs].sort((a, b) => a - b);
 
@@ -85,7 +87,7 @@ class BARREL {
   }
 
   updatebluebarrel() {
-    if(this.positionX ==140 && !(this.positionY == 240 - barrel_single_height)){
+    if(this.positionX ==140 && !(this.positionY == 240 - barrel_single_height * BARREL_SCALE)){
     this.positionY += 7;
   }
 

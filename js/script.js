@@ -160,8 +160,8 @@ let collisionDetectionBlue = (eachbluebarrel)=>{
 }
 
 let collisionDetectionBarrel = (barrel, barrelArray)=>{
-  const bw = barrel_single_width * 1.5;
-  const bh = barrel_single_height * 1.5;
+  const bw = barrel_single_width * BARREL_SCALE;
+  const bh = barrel_single_height * BARREL_SCALE;
 
   if(marioPlayer.positionX < barrel.positionX + bw &&
      marioPlayer.positionX + single_width > barrel.positionX &&
@@ -208,7 +208,7 @@ verticalbarrelanimate;
 
 let barrelAnimation = ()=>{
   barrelpositionanimate = setInterval(() => {
-  barrelArrayLadder.push(new BARREL(180, 112));
+  barrelArrayLadder.push(new BARREL(180, 103));
 
   if (barrelArrayLadder.length > 10 ) {
     barrelArrayLadder.splice(0, 4);

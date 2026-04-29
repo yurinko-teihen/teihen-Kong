@@ -34,7 +34,7 @@ class FIRE{
   }
 }
 
-let fireimage = new FIRE(87,680);
+let fireimage = new FIRE(82,680);
 
 class DRUM{
   constructor(positionX,positionY){

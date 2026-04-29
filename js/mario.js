@@ -140,6 +140,7 @@ class MARIO{
         this.positionY > selectedLadderTop - 40 && 
         this.positionY < selectedLadderTop + selectedLadderHeight){
 
+          GRAVITY = 0;
           stopOffset = 8;
           if(this.positionY  == 36 ){
             stopOffset = 0;
@@ -152,19 +153,17 @@ class MARIO{
       this.index = 0;
 
       if((this.positionX + single_width +20  ) > eachplatform.positionX && this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * 32 ) &&
-      this.positionY + single_height + 5< eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 &&
+      this.positionY + single_height * 1.5 + 5 < eachplatform.positionY + eachplatform.platform_Image.height   && this.positionY > eachplatform.positionY  - 40 &&
       this.velocityY >= 0){
         this.index = platformArray.indexOf(eachplatform);
       }
 
       if((this.positionX + single_width +20  ) > platformArray[this.index].positionX && this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * 35 ) &&
-      this.positionY + single_height < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 &&
+      this.positionY + single_height * 1.5 < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height   && this.positionY > platformArray[this.index].positionY  - 100 &&
       this.velocityY >= 0){
 
         this.jumping = false;
-        if (GRAVITY > 0) {
-          this.positionY = platformArray[this.index].positionY - single_height * 1.5;
-        }
+        this.positionY = platformArray[this.index].positionY - single_height * 1.5;
         this.velocityY = 0;
         GRAVITY =2  ;
         stopOffset = 2;
@@ -236,7 +235,7 @@ loop = function() {
 
   if (controller.jump && marioPlayer.jumping == false && GRAVITY != 0) {
 
-    marioPlayer.velocityY -= 20;
+    marioPlayer.velocityY -= 25;
     marioPlayer.jumping = true;
     // marioPlayer.velocityY += 1.5;
   }

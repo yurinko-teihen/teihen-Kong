@@ -53,7 +53,7 @@ let trackRight = 0,
   hammer_Image.src = "./images/Hammermain.png";
 
   let walkingSound = new Audio('./sounds/walking2.wav'),
-    startSound = new Audio('./sounds/theme.wav');
+    startSound = new Audio('./sounds/theme.wav'),
     collisionSound = new Audio('./sounds/death.wav');
   // mariodead_Image.src = "./images/mariodead.png";
 
@@ -167,11 +167,9 @@ let collisionDetection = (eachbarrelladder)=>{
       localStorage.setItem('highscore', score);
     }
     eachbarrelladder.isbarrelcollision = true;
-    index = barrelArray.indexOf(eachbarrelladder);
-    barrelArray.splice(index,1);
-    if(barrelArray.splice){
-      score += 10;
-    }
+    index = barrelArrayLadder.indexOf(eachbarrelladder);
+    barrelArrayLadder.splice(index,1);
+    score += 10;
 
   if(!ismariohammer){
     collisionSound.play();
@@ -203,9 +201,7 @@ let collisionDetectionBlue = (eachbluebarrel)=>{
     eachbluebarrel.isbarrelcollision = true;
     index = barrelArraynext.indexOf(eachbluebarrel);
     barrelArraynext.splice(index,1);
-    if(barrelArray.splice){
-      score += 10;
-    }
+    score += 10;
 
   if(!ismariohammer){
     collisionSound.play();

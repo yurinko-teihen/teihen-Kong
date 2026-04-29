@@ -180,10 +180,10 @@ updateFrame = ()=>{
   cutframe = ++cutframe % framecount;
   srcX = cutframe * single_width;
 
-  if(left && this.positionX > 0 ){
+  if(left && marioPlayer.positionX > 0 ){
   		srcY = trackLeft * single_height;
   				}
-  if(right && this.positionX<canvas.width-single_width){
+  if(right && marioPlayer.positionX<canvas.width-single_width){
   		srcY = trackRight * single_height;
   				}
 }
@@ -200,7 +200,7 @@ let marioPlayer = new MARIO(marioTrait);
 
 // marioPlayer.draw();
 
-controller = {
+let controller = {
   keyListener:function(event) {
 
   const key_state = (event.type == "keydown")?true:false;
@@ -232,7 +232,7 @@ controller = {
 }
 };
 
-loop = function() {
+let loop = function() {
 
   if (controller.jump && marioPlayer.jumping == false && GRAVITY != 0) {
 

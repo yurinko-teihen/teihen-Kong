@@ -102,7 +102,7 @@ class MARIO{
     const ladderBottom = eachladder.positionY + ladderHeight;
 
     if((this.positionX + single_width +20  ) > eachladder.positionX && this.positionX < (eachladder.positionX + ladder_Image.width ) &&
-     this.positionY < ladderBottom && this.positionY+single_height>eachladder.positionY){
+     this.positionY < ladderBottom && this.positionY + single_height * 1.5 > eachladder.positionY){
       this.index = ladderArray.indexOf(eachladder);
     }
 
@@ -112,7 +112,7 @@ class MARIO{
     
     if((this.positionX + single_width  ) > ladderArray[this.index].positionX &&
      this.positionX < (ladderArray[this.index].positionX + ladder_Image.width -10) &&
-     this.positionY + single_height > selectedLadderTop &&
+     this.positionY + single_height * 1.5 > selectedLadderTop &&
      this.positionY < selectedLadderTop + selectedLadderHeight){
        GRAVITY = 0;
       stopOffset =8;

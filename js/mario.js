@@ -40,6 +40,7 @@ class MARIO{
     this.ladder = true;
     this.indexmario = 0;
     this.indexmariohammer = 0;
+    this.currentPlatformRightEdge = canvas.width - single_width * 2;
 
     setInterval(() => {
      this.indexmario++;
@@ -69,13 +70,16 @@ class MARIO{
     ctx.closePath();
   }
 
-  moveRight(eachplatform){
+  moveRight(){
     updateFrame();
     left = false;
-    // Prevent Mario from moving beyond the right edge of the canvas
-    // Stop twice the sprite width before the edge
-    if (this.positionX + single_width < canvas.width - (single_width * 2)) {
-      this.positionX += 0.5;
+    // rightLimit: keep Mario's sprite fully within the platform (1.5 = sprite scale factor)
+    const rightLimit = Math.min(this.currentPlatformRightEdge - single_width * 1.5, canvas.width - single_width);
+    if (this.positionX < rightLimit) {
+      this.positionX += speed;
+      if (this.positionX > rightLimit) {
+        this.positionX = rightLimit;
+      }
     }
   }
 
@@ -164,6 +168,7 @@ class MARIO{
         this.velocityY = 0;
         GRAVITY =2  ;
         stopOffset = 2;
+        this.currentPlatformRightEdge = platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * platformArray[this.index].width;
 
       }
     }
@@ -243,12 +248,8 @@ loop = function() {
   }
 
   if (controller.right) {
-    platformArray.forEach((eachplatform,index)=>{
-      marioPlayer.moveRight(eachplatform);
-      walkingSound.play();
-
-
-    })
+    marioPlayer.moveRight();
+    walkingSound.play();
   }
 
   if(controller.moveUp){

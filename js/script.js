@@ -193,9 +193,9 @@ let collisionDetectionBarrel = (barrel, barrelArray) => {
 
     if (!ismariohammer) {
       // ハンマーなし：ダメージ処理
-      collisionSound.play();
       marioLives--;
       if (marioLives <= 0) {
+        collisionSound.play();
         ismarioalive = false;
         afterCollision();
       }

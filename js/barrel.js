@@ -115,10 +115,10 @@ class BARREL {
       this.positionX += BARREL_SPEED;
     }
 
-    if ((marioPlayer.positionX + single_width + 20) > platform.positionX &&
+    if ((marioPlayer.positionX + single_width + COLLISION_MARGIN_X) > platform.positionX &&
         marioPlayer.positionX < (platform.positionX + platform.platform_Image.width * 32) &&
-        marioPlayer.positionY + single_height + 5 < platform.positionY + platform.platform_Image.height &&
-        marioPlayer.positionY > platform.positionY - 40) {
+        marioPlayer.positionY + single_height + COLLISION_MARGIN_Y_BOT < platform.positionY + platform.platform_Image.height &&
+        marioPlayer.positionY > platform.positionY - COLLISION_MARGIN_Y_TOP) {
       this.index = platformArray.indexOf(platform);
     }
   }

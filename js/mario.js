@@ -15,7 +15,6 @@ mariodead_Image.src   = './images/mariodead.png';
 // 重力と停止オフセット（ハシゴや着地時に動的に変更される）
 let GRAVITY    = GRAVITY_DEFAULT,
     stopOffset = STOP_OFFSET_DEFAULT;
-let isplatform; // プラットフォーム上かどうかのフラグ（未使用）
 
 // === 通常マリオのスプライト設定 ===
 const sprite_width_mario    = 296,
@@ -126,7 +125,7 @@ class MARIO {
     const ladderBottom = eachladder.positionY + ladderHeight;
     // マリオがこのハシゴの範囲内にいるか確認
     const isOnCurrentLadder =
-      (this.positionX + single_width + 20) > eachladder.positionX &&
+      (this.positionX + single_width + COLLISION_MARGIN_X) > eachladder.positionX &&
       this.positionX < (eachladder.positionX + ladder_Image.width) &&
       this.positionY < ladderBottom &&
       this.positionY + single_height * SPRITE_SCALE > eachladder.positionY;
@@ -164,10 +163,10 @@ class MARIO {
     const ladderBottom = eachladder.positionY + ladderHeight;
 
     // マリオがこのハシゴの範囲内にいれば、そのハシゴのインデックスを使用する
-    if ((this.positionX + single_width + 5) > eachladder.positionX &&
+    if ((this.positionX + single_width + COLLISION_MARGIN_Y_BOT) > eachladder.positionX &&
         this.positionX < (eachladder.positionX + ladder_Image.width) &&
         this.positionY + single_height < ladderBottom &&
-        this.positionY > eachladder.positionY - 40) {
+        this.positionY > eachladder.positionY - COLLISION_MARGIN_Y_TOP) {
       this.indexnext = ladderArray.indexOf(eachladder);
     }
 
@@ -177,7 +176,7 @@ class MARIO {
     // 選択されたハシゴの範囲内なら重力を無効にして下降する
     if ((this.positionX + single_width) > ladderArray[this.indexnext].positionX &&
         this.positionX < (ladderArray[this.indexnext].positionX + ladder_Image.width) &&
-        this.positionY > selectedLadderTop - 40 &&
+        this.positionY > selectedLadderTop - COLLISION_MARGIN_Y_TOP &&
         this.positionY < selectedLadderTop + selectedLadderHeight) {
       GRAVITY    = GRAVITY_ON_LADDER;
       stopOffset = LADDER_CLIMB_SPEED;
@@ -194,19 +193,19 @@ class MARIO {
     this.index = 0;
 
     // マリオがこのプラットフォームの上に乗っているか確認
-    if ((this.positionX + single_width + 20) > eachplatform.positionX &&
+    if ((this.positionX + single_width + COLLISION_MARGIN_X) > eachplatform.positionX &&
         this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * eachplatform.width) &&
-        this.positionY + single_height * SPRITE_SCALE + 5 < eachplatform.positionY + eachplatform.platform_Image.height &&
-        this.positionY > eachplatform.positionY - 40 &&
+        this.positionY + single_height * SPRITE_SCALE + COLLISION_MARGIN_Y_BOT < eachplatform.positionY + eachplatform.platform_Image.height &&
+        this.positionY > eachplatform.positionY - COLLISION_MARGIN_Y_TOP &&
         this.velocityY >= 0) {
       this.index = platformArray.indexOf(eachplatform);
     }
 
     // プラットフォームに着地処理
-    if ((this.positionX + single_width + 20) > platformArray[this.index].positionX &&
+    if ((this.positionX + single_width + COLLISION_MARGIN_X) > platformArray[this.index].positionX &&
         this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * platformArray[this.index].width) &&
         this.positionY + single_height * SPRITE_SCALE < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height &&
-        this.positionY > platformArray[this.index].positionY - 100 &&
+        this.positionY > platformArray[this.index].positionY - COLLISION_JUMP_RANGE &&
         this.velocityY >= 0) {
       this.jumping   = false;
       this.positionY = platformArray[this.index].positionY - single_height * SPRITE_SCALE;

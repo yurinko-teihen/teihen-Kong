@@ -63,6 +63,12 @@ const COLLISION_STOP_DELAY = 500;  // 衝突後にゲームを停止するまで
 const RESPAWN_DELAY        = 3500; // 死亡後の画面切り替え遅延（ms）
 const GAME_WON_DELAY       = 2000; // クリア後の画面切り替え遅延（ms）
 
+// === 衝突判定マージン ===
+const COLLISION_MARGIN_X   = 20;  // 水平方向の衝突判定の余裕（ピクセル）
+const COLLISION_MARGIN_Y_TOP = 40; // プラットフォーム上端からの垂直マージン
+const COLLISION_MARGIN_Y_BOT = 5;  // プレイヤー下端からの垂直マージン（着地判定）
+const COLLISION_JUMP_RANGE   = 100; // ジャンプ中の着地判定の垂直範囲
+
 // === スコア表示位置 ===
 const SCORE_DISPLAY_X = 450; // スコア表示のX座標
 const SCORE_DISPLAY_Y = 40;  // スコア表示のY座標

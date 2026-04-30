@@ -102,9 +102,9 @@ class BARREL {
 
   // 青タルの移動更新（縦に落下しながらプレイヤーを追跡する）
   updatebluebarrel() {
-    // スポーン地点から落下を開始する（最初の左プラットフォームに達するまで）
+    // スポーン地点から落下を開始する（最下段プラットフォームに達するまで）
     if (this.positionX == BLUE_BARREL_SPAWN_X &&
-        !(this.positionY == PLATFORM_Y_LEFT[0] - barrel_single_height)) {
+        this.positionY < PLATFORM_Y_LEFT[2] - barrel_single_height) {
       this.positionY += BARREL_SPEED;
     }
 

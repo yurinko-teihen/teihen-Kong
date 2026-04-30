@@ -48,8 +48,8 @@ const PLATFORM_Y_RIGHT = [170, 400, 635];
 // 通常タルが左方向に走るプラットフォームのY座標
 const PLATFORM_Y_LEFT  = [280, 525, 760];
 
-// 青タルがプレイヤーを追跡する際に水平移動を開始するY座標リスト
-const BLUE_BARREL_TRACK_YS = [742, 630, 525, 392, 280];
+// 青タルがプレイヤーを追跡する際に水平移動を開始するY座標（最下段のみ）
+const BLUE_BARREL_TRACK_YS = [742];
 
 // === ハンマー ===
 const HAMMER_DURATION = 9000; // ハンマー効果の持続時間（ms）

@@ -19,8 +19,7 @@ const SPRITE_WIDTH_BARREL  = 72,
       BLUE_BARREL_FRAMECOUNT = 2; // 青タルのアニメーションフレーム数
 
 let barrel_single_width,  // タル1フレームの横幅（画像ロード後に計算）
-    barrel_single_height, // タル1フレームの縦幅（画像ロード後に計算）
-    acceleration;
+    barrel_single_height; // タル1フレームの縦幅（画像ロード後に計算）
 
 // 画像ロード後にタルの1フレームサイズを計算する
 barrel_Image.addEventListener('load', (e) => {
@@ -113,13 +112,6 @@ class BARREL {
     if (this.positionY >= marioPlayer.positionY &&
         BLUE_BARREL_TRACK_YS.includes(this.positionY)) {
       this.positionX += BARREL_SPEED;
-    }
-
-    if ((marioPlayer.positionX + single_width + COLLISION_MARGIN_X) > platform.positionX &&
-        marioPlayer.positionX < (platform.positionX + platform.platform_Image.width * 32) &&
-        marioPlayer.positionY + single_height + COLLISION_MARGIN_Y_BOT < platform.positionY + platform.platform_Image.height &&
-        marioPlayer.positionY > platform.positionY - COLLISION_MARGIN_Y_TOP) {
-      this.index = platformArray.indexOf(platform);
     }
   }
 }

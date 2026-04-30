@@ -236,7 +236,7 @@ class MARIO {
 }
 
 // 移動時のスプライトフレームを更新する
-updateFrame = () => {
+let updateFrame = () => {
   ctx.clearRect(0, 0, single_width, single_height);
 
   cutframe = ++cutframe % framecount;
@@ -295,6 +295,9 @@ let controller = {
 
 // メインの物理・入力処理ループ（requestAnimationFrameで毎フレーム実行）
 let loop = function() {
+  // 次フレームをスケジュール（先頭で登録することで cancelAnimationFrame が確実に機能する）
+  rafId = window.requestAnimationFrame(loop);
+
   // 左右移動と効果音
   if (controller.left) {
     marioPlayer.moveLeft();
@@ -351,10 +354,8 @@ let loop = function() {
   platformArray.forEach((eachplatform) => {
     marioPlayer.jump(eachplatform);
   });
-
-  window.requestAnimationFrame(loop);
 };
 
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup",   controller.keyListener);
-window.requestAnimationFrame(loop);
+// 物理ループは startGame() から起動される

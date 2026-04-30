@@ -182,7 +182,7 @@ let collisionDetectionBarrel = (barrel, barrelArray) => {
       marioPlayer.positionY < barrel.positionY + bh &&
       marioPlayer.positionY + single_height > barrel.positionY) {
     // ハイスコアを更新
-    if (localStorage.getItem('highscore') < score) {
+    if (Number(localStorage.getItem('highscore') ?? 0) < score) {
       localStorage.setItem('highscore', score);
     }
 
@@ -217,7 +217,7 @@ let displayScore = () => {
 }
 
 // === タル管理 ===
-let barrelArray       = [];
+let rafId; // 物理ループ（requestAnimationFrame）のフレームID
 let barrelArrayLadder = [];
 let barrelArraynext   = [];
 let barrelpositionanimate,
@@ -250,20 +250,23 @@ let barrelAnimation = () => {
 let afterCollision = () => {
   ismarioalive  = false;
   ismariohammer = false;
+  isGameOver    = true;
+
+  // COLLISION_STOP_DELAY ms後にゲームループを停止する（死亡アニメーションを少し見せる）
+  setTimeout(() => {
+    clearInterval(gameclearance);
+  }, COLLISION_STOP_DELAY);
 
   // RESPAWN_DELAY ms後にゲームオーバー画面へ遷移し、ハンマーをリセット
   setTimeout(() => {
     stopGameCanvas();
-    hammerArray = [
-      new HAMMER(HAMMER_ONE_X, HAMMER_ONE_Y),
-      new HAMMER(HAMMER_TWO_X, HAMMER_TWO_Y)
-    ];
+    resetHammers();
   }, RESPAWN_DELAY);
 
-  // タルのスポーンを停止し、配列をクリア
+  // タルのスポーンを停止し、物理ループを止め、配列をクリア
   clearInterval(barrelpositionanimate);
   clearInterval(verticalbarrelanimate);
-  window.cancelAnimationFrame(loop);
+  window.cancelAnimationFrame(rafId);
   barrelArrayLadder = [];
   barrelArraynext   = [];
 }
@@ -275,17 +278,14 @@ let afterGameWon = () => {
   // GAME_WON_DELAY ms後にクリア画面へ遷移し、ハンマーをリセット
   setTimeout(() => {
     gameWonCanvas();
-    hammerArray = [
-      new HAMMER(HAMMER_ONE_X, HAMMER_ONE_Y),
-      new HAMMER(HAMMER_TWO_X, HAMMER_TWO_Y)
-    ];
+    resetHammers();
   }, GAME_WON_DELAY);
 
   // ループとタルのスポーンを停止
   clearInterval(gameclearance);
   clearInterval(barrelpositionanimate);
   clearInterval(verticalbarrelanimate);
-  window.cancelAnimationFrame(loop);
+  window.cancelAnimationFrame(rafId);
   barrelArrayLadder = [];
   barrelArraynext   = [];
 }
@@ -297,6 +297,15 @@ let updateAll = () => {
   score         = 0;
   marioLives    = INITIAL_MARIO_LIVES;
   ismariohammer = false;
+}
+
+// ハンマー配列を初期状態（3個）に戻すユーティリティ
+let resetHammers = () => {
+  hammerArray = [
+    new HAMMER(HAMMER_ONE_X,   HAMMER_ONE_Y),
+    new HAMMER(HAMMER_TWO_X,   HAMMER_TWO_Y),
+    new HAMMER(HAMMER_THREE_X, HAMMER_THREE_Y)
+  ];
 }
 
 // スタート画面の描画
@@ -381,6 +390,8 @@ let startGame = () => {
   .then(() => {
     barrelAnimation();
     gameLoop();
+    // 物理ループを起動（afterCollision / afterGameWon で停止されていた場合も含む）
+    rafId = window.requestAnimationFrame(loop);
   });
 }
 
@@ -477,7 +488,8 @@ let gameWonCanvas = () => {
     if (e.keyCode == 13 && isGameOver) {
       startGame();
       updateAll();
-      isGameOver = false;
+      isGameOver   = false;
+      ismarioalive = true;
     }
   }
 }

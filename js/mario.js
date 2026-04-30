@@ -337,9 +337,9 @@ let loop = function() {
 
   // キャンバス下端から落下した場合はダメージ処理
   if (marioPlayer.positionY > canvas.height) {
-    collisionSound.play();
     marioLives--;
     if (marioLives <= 0) {
+      collisionSound.play();
       ismarioalive = false;
       afterCollision();
     } else {

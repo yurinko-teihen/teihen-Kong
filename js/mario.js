@@ -295,12 +295,6 @@ let controller = {
 
 // メインの物理・入力処理ループ（requestAnimationFrameで毎フレーム実行）
 let loop = function() {
-  // ジャンプ入力（地面にいるときのみ有効）
-  if (controller.jump && marioPlayer.jumping == false && GRAVITY != 0) {
-    marioPlayer.velocityY -= JUMP_VELOCITY;
-    marioPlayer.jumping = true;
-  }
-
   // 左右移動と効果音
   if (controller.left) {
     marioPlayer.moveLeft();
@@ -311,7 +305,7 @@ let loop = function() {
     walkingSound.play();
   }
 
-  // ハシゴの昇降
+  // ハシゴの昇降（ジャンプ判定より先に処理し、ハシゴ上でのジャンプ貫通を防ぐ）
   if (controller.moveUp) {
     ladderArray.forEach((eachladder) => {
       marioPlayer.moveUp(eachladder);
@@ -323,6 +317,12 @@ let loop = function() {
       marioPlayer.moveDown(eachladder);
       walkingSound.play();
     });
+  }
+
+  // ジャンプ入力（地面にいるときのみ有効・ハシゴ昇降中は GRAVITY=0 のため無効）
+  if (controller.jump && marioPlayer.jumping == false && GRAVITY != 0) {
+    marioPlayer.velocityY -= JUMP_VELOCITY;
+    marioPlayer.jumping = true;
   }
 
   // 物理演算（重力・速度・摩擦）

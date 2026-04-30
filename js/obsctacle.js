@@ -47,8 +47,8 @@ class FIRE {
   }
 }
 
-// 炎のインスタンス（マリオのスタート地点付近に配置）
-let fireimage = new FIRE(MARIO_INIT_X, 720);
+// 炎のインスタンス（ドラム缶の上に配置）
+let fireimage = new FIRE(FIRE_X, FIRE_Y);
 
 class DRUM {
   constructor(positionX, positionY) {
@@ -64,5 +64,5 @@ class DRUM {
   }
 }
 
-// ドラム缶のインスタンス（炎の下に配置）
-let drumimage = new DRUM(MARIO_INIT_X, 732);
+// ドラム缶のインスタンス（マリオ初期位置の右・最下段プラットフォームの上に配置）
+let drumimage = new DRUM(DRUM_X, DRUM_Y);

@@ -315,7 +315,7 @@ let drawStartScreen = () => {
   ctx.save();
   ctx.font      = '18px Arial';
   ctx.fillStyle = 'yellow';
-  ctx.fillText(`v1.3`, canvas.width - 40, canvas.height - 10);
+  ctx.fillText(`v1.4`, canvas.width - 40, canvas.height - 10);
   ctx.restore();
 
   // スタートメッセージ表示

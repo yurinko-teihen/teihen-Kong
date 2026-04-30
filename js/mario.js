@@ -294,7 +294,6 @@ let controller = {
 };
 
 // メインの物理・入力処理ループ（requestAnimationFrameで毎フレーム実行）
-let rafId;
 let loop = function() {
   // 次フレームをスケジュール（先頭で登録することで cancelAnimationFrame が確実に機能する）
   rafId = window.requestAnimationFrame(loop);
@@ -359,4 +358,4 @@ let loop = function() {
 
 window.addEventListener("keydown", controller.keyListener);
 window.addEventListener("keyup",   controller.keyListener);
-rafId = window.requestAnimationFrame(loop);
+// 物理ループは startGame() から起動される

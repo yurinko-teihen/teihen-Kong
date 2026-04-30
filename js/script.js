@@ -182,7 +182,7 @@ let collisionDetectionBarrel = (barrel, barrelArray) => {
       marioPlayer.positionY < barrel.positionY + bh &&
       marioPlayer.positionY + single_height > barrel.positionY) {
     // ハイスコアを更新
-    if (Number(localStorage.getItem('highscore') || 0) < score) {
+    if (Number(localStorage.getItem('highscore') ?? 0) < score) {
       localStorage.setItem('highscore', score);
     }
 
@@ -217,6 +217,7 @@ let displayScore = () => {
 }
 
 // === タル管理 ===
+let rafId; // 物理ループ（requestAnimationFrame）のフレームID
 let barrelArrayLadder = [];
 let barrelArraynext   = [];
 let barrelpositionanimate,
@@ -389,8 +390,7 @@ let startGame = () => {
   .then(() => {
     barrelAnimation();
     gameLoop();
-    // 物理ループを再起動（cancelAnimationFrame で停止していた場合に備える）
-    window.cancelAnimationFrame(rafId);
+    // 物理ループを起動（afterCollision / afterGameWon で停止されていた場合も含む）
     rafId = window.requestAnimationFrame(loop);
   });
 }

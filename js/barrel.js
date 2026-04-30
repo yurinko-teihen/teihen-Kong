@@ -77,8 +77,8 @@ class BARREL {
   updatebarrelladder() {
     // タルがY方向でスナップするプラットフォームのY座標
     // （barrel_single_height 分上にオフセットしてプラットフォームの上に乗せる）
-    const rightPlatformYs = PLATFORM_Y_RIGHT.map(y => y - barrel_single_height);
-    const leftPlatformYs  = PLATFORM_Y_LEFT.map(y  => y - barrel_single_height);
+    const rightPlatformYs = PLATFORM_Y_RIGHT.map(y => y - barrel_single_height * SPRITE_SCALE);
+    const leftPlatformYs  = PLATFORM_Y_LEFT.map(y  => y - barrel_single_height * SPRITE_SCALE);
     const allPlatformYs   = [...rightPlatformYs, ...leftPlatformYs].sort((a, b) => a - b);
 
     const onRightPlatform = rightPlatformYs.includes(this.positionY);

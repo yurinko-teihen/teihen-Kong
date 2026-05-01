@@ -72,9 +72,19 @@ class MARIO {
     ctx.beginPath();
     // 通常状態
     if (ismarioalive && !ismariohammer) {
-      ctx.drawImage(mario_Image, srcX, srcY, single_width, single_height,
-        this.positionX, this.positionY,
-        single_width * SPRITE_SCALE, single_height * SPRITE_SCALE);
+      const dw = single_width  * SPRITE_SCALE;
+      const dh = single_height * SPRITE_SCALE;
+      if (left) {
+        // 左向きのときはスプライトを水平反転して描画する
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.drawImage(mario_Image, srcX, srcY, single_width, single_height,
+          -(this.positionX + dw), this.positionY, dw, dh);
+        ctx.restore();
+      } else {
+        ctx.drawImage(mario_Image, srcX, srcY, single_width, single_height,
+          this.positionX, this.positionY, dw, dh);
+      }
     }
     // 死亡状態
     if (!ismarioalive) {

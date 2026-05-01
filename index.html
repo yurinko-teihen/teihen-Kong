@@ -28,7 +28,7 @@
       main {
         flex: 1;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: center;
         overflow: hidden;
         min-height: 0;
@@ -37,9 +37,7 @@
       #canvas {
         display: block;
         background-color: black;
-        max-width: 100%;
-        max-height: 100%;
-        width: auto;
+        width: 100%;
         height: auto;
       }
 
@@ -144,17 +142,6 @@
       @media (orientation: landscape) and (max-height: 500px) {
         #gameboy-controls {
           display: none;
-        }
-        #canvas {
-          height: 100%;
-          width: auto;
-        }
-      }
-
-      @media (orientation: portrait) {
-        #canvas {
-          width: 100vw;
-          height: auto;
         }
       }
     </style>

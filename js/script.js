@@ -10,7 +10,6 @@ let ctx = canvas.getContext('2d');
 canvas.width  = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 canvas.style.display         = 'block';
-canvas.style.margin          = '0 auto';
 canvas.style.backgroundColor = 'black';
 
 // ランダムな整数を返すユーティリティ関数

@@ -98,6 +98,7 @@ class MARIO {
   moveRight() {
     updateFrame();
     left = false;
+    right = true;
     const rightLimit = Math.min(
       this.currentPlatformRightEdge - single_width * SPRITE_SCALE,
       canvas.width - single_width
@@ -114,6 +115,7 @@ class MARIO {
   moveLeft() {
     updateFrame();
     left = true;
+    right = false;
     if (this.positionX > single_width * 2) {
       this.positionX -= speed;
     }

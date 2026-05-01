@@ -153,6 +153,11 @@ class MARIO {
         stopOffset     = STOP_OFFSET_DEFAULT;
         this.currentPlatformRightEdge =
           platformAbove.positionX + platformAbove.platform_Image.width * platformAbove.width;
+      } else {
+        // プラットフォームが見つからない場合は重力を元に戻してジャンプ可能にする
+        GRAVITY    = GRAVITY_DEFAULT;
+        stopOffset = STOP_OFFSET_DEFAULT;
+        this.jumping = true;
       }
     }
   }

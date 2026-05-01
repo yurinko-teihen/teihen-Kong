@@ -36,8 +36,8 @@ let ladderSix    = new LADDER(230, 293, 6);
 let ladderSeven  = new LADDER(110, 293, 6);
 let ladderEight  = new LADDER(500, 189, 6);
 let ladderNine   = new LADDER(400, 114, 3);
-let ladderTen    = new LADDER(280,  73, 6);
-let ladderEleven = new LADDER(230,  73, 6);
+let ladderTen    = new LADDER(280, 100, 4);
+let ladderEleven = new LADDER(230, 100, 4);
 
 let ladderArray = [
   ladderOne, ladderTwo, ladderThree, ladderFour, ladderFive,

@@ -30,10 +30,10 @@ const sprite_width  = 264,
 
 // === ゲーム状態変数 ===
 let trackRight    = 0,        // 右向きアニメーションの行インデックス
-    trackLeft     = 1,        // 左向きアニメーションの行インデックス
+    trackLeft     = 0,        // 左向きアニメーションの行インデックス（同じ行を使い描画時に左右反転）
     cutframe      = 0,        // 現在のアニメーションフレーム番号
     srcX          = 0,        // スプライトシートの切り取り開始X
-    srcY          = 1,        // スプライトシートの切り取り開始Y
+    srcY          = 0,        // スプライトシートの切り取り開始Y
     left          = false,    // 左向きフラグ
     right         = true,     // 右向きフラグ
     ismarioalive  = true,     // マリオが生きているか

@@ -23,7 +23,15 @@ const GRAVITY_ON_LADDER   = 0;  // ハシゴ昇降中の重力（無重力）
 const LADDER_CLIMB_SPEED  = 8;  // ハシゴの昇降速度（ピクセル/フレーム）
 const STOP_OFFSET_DEFAULT = 2;  // デフォルトの停止オフセット
 const FRICTION            = 0.9; // 摩擦係数（速度の減衰率）
-const INITIAL_MARIO_LIVES = 3;  // マリオの初期ライフ数
+const INITIAL_MARIO_LIVES = 3;  // マリオの初期ライフ数（デフォルト：ふつう）
+
+// === 難易度 ===
+const DIFFICULTIES = [
+  { name: 'かんたん',         lives: 4 },
+  { name: 'ふつう',           lives: 3 },
+  { name: 'むずかしい',       lives: 2 },
+  { name: 'とてもむずかしい', lives: 1 },
+];
 
 // === スコア ===
 const SCORE_WIN_BONUS  = 100; // ゲームクリア時のボーナス得点

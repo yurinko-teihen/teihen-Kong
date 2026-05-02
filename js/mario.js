@@ -92,13 +92,24 @@ class MARIO {
         this.positionX, this.positionY,
         mario_single_width * SPRITE_SCALE, sprite_height_mario * SPRITE_SCALE);
     }
-    // ハンマー装備状態
+    // ハンマー装備状態（スター風カラーエフェクト：通常スプライトを虹色に光らせる）
     if (ismariohammer && ismarioalive) {
-      ctx.drawImage(mariohammer_Image,
-        this.indexmariohammer * mariohammer_single_width, 0,
-        mariohammer_single_width, mariohammer_single_height,
-        this.positionX, this.positionY - 10,
-        mariohammer_single_width * SPRITE_SCALE, mariohammer_single_height * SPRITE_SCALE);
+      const hue = (Date.now() / 5) % 360;
+      const dw  = single_width  * SPRITE_SCALE;
+      const dh  = single_height * SPRITE_SCALE;
+      ctx.save();
+      ctx.filter      = `hue-rotate(${hue}deg) brightness(1.8) saturate(2)`;
+      ctx.shadowBlur  = 15;
+      ctx.shadowColor = `hsl(${hue}, 100%, 60%)`;
+      if (left) {
+        ctx.scale(-1, 1);
+        ctx.drawImage(mario_Image, srcX, srcY, single_width, single_height,
+          -(this.positionX + dw), this.positionY, dw, dh);
+      } else {
+        ctx.drawImage(mario_Image, srcX, srcY, single_width, single_height,
+          this.positionX, this.positionY, dw, dh);
+      }
+      ctx.restore();
     }
   }
 

@@ -207,31 +207,29 @@ class MARIO {
 
   // プラットフォームへの着地判定（ジャンプ後の衝突判定も含む）
   jump(eachplatform) {
-    this.index = 0;
+    const feetY        = this.positionY + single_height * SPRITE_SCALE;
+    const platformTop  = eachplatform.positionY;
+    const platformRight = eachplatform.positionX + eachplatform.platform_Image.width * eachplatform.width;
 
-    // マリオがこのプラットフォームの上に乗っているか確認
-    if ((this.positionX + single_width + COLLISION_MARGIN_X) > eachplatform.positionX &&
-        this.positionX < (eachplatform.positionX + eachplatform.platform_Image.width * eachplatform.width) &&
-        this.positionY + single_height * SPRITE_SCALE + COLLISION_MARGIN_Y_BOT < eachplatform.positionY + eachplatform.platform_Image.height &&
-        this.positionY > eachplatform.positionY - COLLISION_MARGIN_Y_TOP &&
-        this.velocityY >= 0) {
-      this.index = platformArray.indexOf(eachplatform);
+    // 水平方向の重なりチェック
+    if ((this.positionX + single_width + COLLISION_MARGIN_X) <= eachplatform.positionX ||
+        this.positionX >= platformRight) {
+      return;
     }
 
-    // プラットフォームに着地処理
-    if ((this.positionX + single_width + COLLISION_MARGIN_X) > platformArray[this.index].positionX &&
-        this.positionX < (platformArray[this.index].positionX + platformArray[this.index].platform_Image.width * platformArray[this.index].width) &&
-        this.positionY + single_height * SPRITE_SCALE < platformArray[this.index].positionY + platformArray[this.index].platform_Image.height &&
-        this.positionY > platformArray[this.index].positionY - COLLISION_JUMP_RANGE &&
+    // 着地判定：落下中にプラットフォーム上面を通過（または貫通）したとき
+    // feetY >= platformTop で足がプラットフォーム上面に達したことを検出し、
+    // 高速落下で1フレームに貫通した場合も COLLISION_MARGIN_Y_TOP の範囲内で確実に捕捉する
+    if (feetY >= platformTop &&
+        this.positionY < platformTop + COLLISION_MARGIN_Y_TOP &&
+        this.positionY > platformTop - COLLISION_JUMP_RANGE &&
         this.velocityY >= 0) {
       this.jumping   = false;
-      this.positionY = platformArray[this.index].positionY - single_height * SPRITE_SCALE;
+      this.positionY = platformTop - single_height * SPRITE_SCALE;
       this.velocityY = 0;
       GRAVITY        = GRAVITY_ON_PLATFORM;
       stopOffset     = STOP_OFFSET_DEFAULT;
-      this.currentPlatformRightEdge =
-        platformArray[this.index].positionX +
-        platformArray[this.index].platform_Image.width * platformArray[this.index].width;
+      this.currentPlatformRightEdge = platformRight;
     }
   }
 
@@ -326,7 +324,8 @@ let loop = function() {
   }
 
   // ハシゴの昇降（ジャンプ判定より先に処理し、ハシゴ上でのジャンプ貫通を防ぐ）
-  if (controller.moveUp) {
+  // velocityY < 0（上昇中）のときは moveUp を無効化し、ジャンプへの余分な上昇力を防ぐ
+  if (controller.moveUp && marioPlayer.velocityY >= 0) {
     ladderArray.forEach((eachladder) => {
       marioPlayer.moveUp(eachladder);
       walkingSound.play();

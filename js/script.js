@@ -388,12 +388,12 @@ let startGameCanvas = () => {
   });
 
   // 難易度選択の↑↓ナビゲーション
-  document.onkeydown = (e) => {
+  window.onkeydown = (e) => {
     if (isGamePlaying) return;
-    if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowUp' || e.keyCode === 38) {
       selectedDifficultyIndex = (selectedDifficultyIndex - 1 + DIFFICULTIES.length) % DIFFICULTIES.length;
       drawStartScreen();
-    } else if (e.key === 'ArrowDown') {
+    } else if (e.key === 'ArrowDown' || e.keyCode === 40) {
       selectedDifficultyIndex = (selectedDifficultyIndex + 1) % DIFFICULTIES.length;
       drawStartScreen();
     }

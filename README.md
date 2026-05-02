@@ -1,1 +1,1 @@
-teihen-king
+teihen-kong

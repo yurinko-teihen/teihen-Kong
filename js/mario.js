@@ -189,10 +189,11 @@ class MARIO {
     const ladderBottom = eachladder.positionY + ladderHeight;
 
     // マリオがこのハシゴの範囲内にいれば、そのハシゴのインデックスを使用する
+    const marioFeetOffset = single_height * SPRITE_SCALE;
     if ((this.positionX + single_width + COLLISION_MARGIN_Y_BOT) > eachladder.positionX &&
         this.positionX < (eachladder.positionX + ladder_Image.width) &&
         this.positionY + single_height < ladderBottom &&
-        this.positionY > eachladder.positionY - COLLISION_MARGIN_Y_TOP) {
+        this.positionY + marioFeetOffset > eachladder.positionY - COLLISION_MARGIN_Y_TOP) {
       this.indexnext = ladderArray.indexOf(eachladder);
     }
 
@@ -202,7 +203,7 @@ class MARIO {
     // 選択されたハシゴの範囲内なら重力を無効にして下降する
     if ((this.positionX + single_width) > ladderArray[this.indexnext].positionX &&
         this.positionX < (ladderArray[this.indexnext].positionX + ladder_Image.width) &&
-        this.positionY > selectedLadderTop - COLLISION_MARGIN_Y_TOP &&
+        this.positionY + marioFeetOffset > selectedLadderTop - COLLISION_MARGIN_Y_TOP &&
         this.positionY < selectedLadderTop + selectedLadderHeight) {
       GRAVITY    = GRAVITY_ON_LADDER;
       stopOffset = LADDER_CLIMB_SPEED;
@@ -329,12 +330,13 @@ let loop = function() {
   // 次フレームをスケジュール（先頭で登録することで cancelAnimationFrame が確実に機能する）
   rafId = window.requestAnimationFrame(loop);
 
-  // 左右移動と効果音
-  if (controller.left) {
+  // 左右移動と効果音（ハシゴ昇降中は横移動禁止）
+  const canMoveHorizontally = GRAVITY !== GRAVITY_ON_LADDER;
+  if (controller.left && canMoveHorizontally) {
     marioPlayer.moveLeft();
     walkingSound.play();
   }
-  if (controller.right) {
+  if (controller.right && canMoveHorizontally) {
     marioPlayer.moveRight();
     walkingSound.play();
   }

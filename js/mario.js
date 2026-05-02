@@ -70,7 +70,7 @@ class MARIO {
   // マリオをキャンバスに描画する（状態に応じてスプライトを切り替える）
   draw() {
     // 通常状態
-    if (ismarioalive && !ismariohammer) {
+    if (ismarioalive && !ismariostar) {
       const dw = single_width  * SPRITE_SCALE;
       const dh = single_height * SPRITE_SCALE;
       if (left) {
@@ -92,8 +92,8 @@ class MARIO {
         this.positionX, this.positionY,
         mario_single_width * SPRITE_SCALE, sprite_height_mario * SPRITE_SCALE);
     }
-    // ハンマー装備状態（スター風カラーエフェクト：通常スプライトを虹色に光らせる）
-    if (ismariohammer && ismarioalive) {
+    // スター装備状態（通常スプライトを虹色に光らせる）
+    if (ismariostar && ismarioalive) {
       const hue = (Date.now() / 5) % 360;
       const dw  = single_width  * SPRITE_SCALE;
       const dh  = single_height * SPRITE_SCALE;

@@ -69,7 +69,6 @@ class MARIO {
 
   // マリオをキャンバスに描画する（状態に応じてスプライトを切り替える）
   draw() {
-    ctx.beginPath();
     // 通常状態
     if (ismarioalive && !ismariohammer) {
       const dw = single_width  * SPRITE_SCALE;
@@ -101,7 +100,6 @@ class MARIO {
         this.positionX, this.positionY - 10,
         mariohammer_single_width * SPRITE_SCALE, mariohammer_single_height * SPRITE_SCALE);
     }
-    ctx.closePath();
   }
 
   // 右へ移動する（プラットフォームの端を超えないよう制限する）

@@ -14,11 +14,9 @@ class HAMMER {
 
   // ハンマーをキャンバスに描画する
   draw() {
-    ctx.beginPath();
     ctx.drawImage(hammermario_Image,
       this.positionX, this.positionY,
       single_width * SPRITE_SCALE, single_height * SPRITE_SCALE);
-    ctx.closePath();
   }
 }
 

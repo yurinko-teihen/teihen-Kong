@@ -15,13 +15,11 @@ class LADDER {
 
   // ハシゴをキャンバスに描画する（縦方向にタイルを繰り返す）
   draw() {
-    ctx.beginPath();
-    var patternladder = ctx.createPattern(ladder_Image, "repeat-y");
+    const patternladder = ctx.createPattern(ladder_Image, "repeat-y");
     ctx.fillStyle = patternladder;
     ctx.save();
     ctx.translate(this.positionX, this.positionY);
     ctx.fillRect(0, 0, ladder_Image.width, ladder_Image.height * this.height);
-    ctx.translate(-this.positionX, -this.positionY);
     ctx.restore();
   }
 }

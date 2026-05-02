@@ -14,13 +14,11 @@ class PLATFORM {
 
   // プラットフォームをキャンバスに描画する（横方向にタイルを繰り返す）
   draw() {
-    ctx.beginPath();
-    var pattern = ctx.createPattern(this.platform_Image, "repeat-x");
+    const pattern = ctx.createPattern(this.platform_Image, "repeat-x");
     ctx.fillStyle = pattern;
     ctx.save();
     ctx.translate(this.positionX, this.positionY);
     ctx.fillRect(0, 0, this.platform_Image.width * this.width, this.platform_Image.height);
-    ctx.translate(-this.positionX, -this.positionY);
     ctx.restore();
   }
 }

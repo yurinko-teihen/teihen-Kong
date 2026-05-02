@@ -200,7 +200,6 @@ let collisionDetectionBarrel = (barrel, barrelArray) => {
     barrel.isbarrelcollision = true;
     const index = barrelArray.indexOf(barrel);
     barrelArray.splice(index, 1);
-    score += SCORE_BARREL_HIT;
 
     if (!ismariohammer) {
       // ハンマーなし：ダメージ処理
@@ -212,6 +211,7 @@ let collisionDetectionBarrel = (barrel, barrelArray) => {
       }
     } else {
       // ハンマーあり：タルを破壊（ダメージなし）
+      score += SCORE_BARREL_HIT;
       ismarioalive = true;
     }
     return true;
@@ -322,7 +322,6 @@ let resetHammers = () => {
 // スタート画面の描画
 let drawStartScreen = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  startSound.play();
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(banner_Image,       canvas.width / 2 - banner_Image.width / 2,  canvas.height / 2 - banner_Image.height / 2 - 200);
@@ -383,7 +382,10 @@ let startGameCanvas = () => {
     waitForImage(orangebarrel_Image),
     waitForImage(kong_Image),
     waitForImage(hammer_Image)
-  ]).then(drawStartScreen);
+  ]).then(() => {
+    startSound.play().catch(() => {});
+    drawStartScreen();
+  });
 
   // 難易度選択の↑↓ナビゲーション
   document.onkeydown = (e) => {

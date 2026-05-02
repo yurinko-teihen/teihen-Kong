@@ -18,47 +18,32 @@ const sprite_width_enemy  = 502,
       enemy_framecount    = 5; // アニメーションのフレーム数
 
 // === ポリーンのスプライト設定 ===
-const sprite_width_pauline  = 97,
-      sprite_height_pauline = 27,
-      sprite_rows_pauline   = 1,
+const sprite_width_pauline   = 97,
+      sprite_height_pauline  = 27,
+      sprite_rows_pauline    = 1,
       sprite_columns_pauline = 4,
-      pauline_framecount    = 4; // アニメーションのフレーム数
+      pauline_framecount     = 4; // アニメーションのフレーム数
 
-let enemy_single_width,   // 敵1フレームの横幅（画像ロード後に計算）
-    enemy_single_height,  // 敵1フレームの縦幅（画像ロード後に計算）
-    pauline_single_width, // ポリーン1フレームの横幅
-    pauline_single_height; // ポリーン1フレームの縦幅
+let enemy_single_width,  // 敵1フレームの横幅（画像ロード後に計算）
+    enemy_single_height; // 敵1フレームの縦幅（画像ロード後に計算）
 
 // 画像ロード後にフレームサイズを計算する
-enemy_Image.addEventListener('load', (e) => {
+enemy_Image.addEventListener('load', () => {
   enemy_single_width  = sprite_width_enemy  / sprite_columns;
   enemy_single_height = sprite_height_enemy / sprite_rows;
-});
-pauline_Image.addEventListener('load', (e) => {
-  pauline_single_width  = sprite_width_pauline  / sprite_columns_pauline;
-  pauline_single_height = sprite_height_pauline / sprite_rows_pauline;
 });
 
 class ENEMY {
   constructor(positionX, positionY) {
-    this.positionX   = positionX;
-    this.positionY   = positionY;
-    this.index       = 0; // 敵アニメーションのフレーム番号
-    this.secondindex = 0; // ポリーンアニメーションのフレーム番号
+    this.positionX = positionX;
+    this.positionY = positionY;
+    this.index     = 0; // アニメーションのフレーム番号
 
-    // 敵のアニメーションフレームを一定間隔で進める
+    // アニメーションフレームを一定間隔で進める
     setInterval(() => {
       this.index++;
       if (this.index >= enemy_framecount) {
         this.index = 0;
-      }
-    }, 1000);
-
-    // ポリーンのアニメーションフレームを一定間隔で進める
-    setInterval(() => {
-      this.secondindex++;
-      if (this.secondindex >= pauline_framecount) {
-        this.secondindex = 0;
       }
     }, 1000);
   }
@@ -69,17 +54,41 @@ class ENEMY {
       this.index * enemy_single_width, 0, enemy_single_width, enemy_single_height,
       this.positionX, this.positionY, enemy_single_width, sprite_height_enemy);
   }
+}
+
+let pauline_single_width,  // ポリーン1フレームの横幅（画像ロード後に計算）
+    pauline_single_height; // ポリーン1フレームの縦幅（画像ロード後に計算）
+
+pauline_Image.addEventListener('load', () => {
+  pauline_single_width  = sprite_width_pauline  / sprite_columns_pauline;
+  pauline_single_height = sprite_height_pauline / sprite_rows_pauline;
+});
+
+class PAULINE {
+  constructor(positionX, positionY) {
+    this.positionX = positionX;
+    this.positionY = positionY;
+    this.index     = 0; // アニメーションのフレーム番号
+
+    // アニメーションフレームを一定間隔で進める
+    setInterval(() => {
+      this.index++;
+      if (this.index >= pauline_framecount) {
+        this.index = 0;
+      }
+    }, 1000);
+  }
 
   // ポリーンをキャンバスに描画する
-  drawpauline() {
+  draw() {
     ctx.drawImage(pauline_Image,
-      this.secondindex * pauline_single_width, 0, pauline_single_width, pauline_single_height,
+      this.index * pauline_single_width, 0, pauline_single_width, pauline_single_height,
       this.positionX, this.positionY,
       pauline_single_width * SPRITE_SCALE, sprite_height_pauline * SPRITE_SCALE);
   }
 }
 
 // ドンキーコング（ステージ左上に配置）
-let enemy  = new ENEMY(310, 8);
+let enemy   = new ENEMY(DONKEY_KONG_X, DONKEY_KONG_Y);
 // ポリーン（マリオが救出する目標キャラクター）
-let pauline = new ENEMY(40, 129);
+let pauline = new PAULINE(PAULINE_X, PAULINE_Y);

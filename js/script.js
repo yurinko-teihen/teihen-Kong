@@ -12,13 +12,6 @@ canvas.height = CANVAS_HEIGHT;
 canvas.style.display         = 'block';
 canvas.style.backgroundColor = 'black';
 
-// ランダムな整数を返すユーティリティ関数
-let generateRandomNumber = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
 // === プレイヤースプライト設定 ===
 const sprite_width  = 264,
       sprite_height = 24,
@@ -91,7 +84,7 @@ let gameLoop = () => {
     // プレイヤー・敵・その他オブジェクトを描画
     marioPlayer.draw();
     enemy.draw();
-    pauline.drawpauline();
+    pauline.draw();
     drumimage.draw();
     fireimage.draw();
     gameWon();
@@ -210,7 +203,7 @@ let collisionDetectionBarrel = (barrel, barrelArray) => {
 // スコアとライフをキャンバス上に表示する
 let displayScore = () => {
   ctx.fillStyle = 'red';
-  ctx.font = "20px Arial";
+  ctx.font = FONT_SCORE;
   let heartsText = '❤️'.repeat(marioLives);
   ctx.fillText(heartsText + " Score : " + score, SCORE_DISPLAY_X, SCORE_DISPLAY_Y);
 }
@@ -245,6 +238,15 @@ let barrelAnimation = () => {
   }, BLUE_BARREL_SPAWN_INTERVAL);
 }
 
+// タルスポーン・物理ループ・タル配列をまとめてリセットする共通処理
+let cleanupGame = () => {
+  clearInterval(barrelpositionanimate);
+  clearInterval(verticalbarrelanimate);
+  window.cancelAnimationFrame(rafId);
+  barrelArrayLadder = [];
+  barrelArraynext   = [];
+}
+
 // 衝突後の処理（ライフが0になったとき）
 let afterCollision = () => {
   ismarioalive  = false;
@@ -262,12 +264,7 @@ let afterCollision = () => {
     resetHammers();
   }, RESPAWN_DELAY);
 
-  // タルのスポーンを停止し、物理ループを止め、配列をクリア
-  clearInterval(barrelpositionanimate);
-  clearInterval(verticalbarrelanimate);
-  window.cancelAnimationFrame(rafId);
-  barrelArrayLadder = [];
-  barrelArraynext   = [];
+  cleanupGame();
 }
 
 // ゲームクリア後の処理
@@ -282,11 +279,7 @@ let afterGameWon = () => {
 
   // ループとタルのスポーンを停止
   clearInterval(gameclearance);
-  clearInterval(barrelpositionanimate);
-  clearInterval(verticalbarrelanimate);
-  window.cancelAnimationFrame(rafId);
-  barrelArrayLadder = [];
-  barrelArraynext   = [];
+  cleanupGame();
 }
 
 // マリオの状態をリセットする（リトライ・スタート時）
@@ -321,21 +314,21 @@ let drawStartScreen = () => {
 
   // バージョン表示
   ctx.save();
-  ctx.font      = '18px Arial';
+  ctx.font      = FONT_BODY;
   ctx.fillStyle = 'yellow';
   ctx.fillText(`v1.5`, canvas.width - 40, canvas.height - 10);
   ctx.restore();
 
   // スタートメッセージ表示
   ctx.save();
-  ctx.font      = '24px START GAME';
+  ctx.font      = FONT_TITLE;
   ctx.fillStyle = 'red';
   ctx.strokeText(`START GAME`, canvas.width / 2,      canvas.height / 2);
   ctx.fillText(`START GAME`,   canvas.width / 2 - 60, canvas.height / 2 + 50);
   ctx.restore();
 
   ctx.save();
-  ctx.font      = '18px START GAME';
+  ctx.font      = FONT_BODY;
   ctx.fillStyle = 'white';
   ctx.fillText(`Press Enter.`, canvas.width / 2 - 30, canvas.height / 2 + 130);
   ctx.restore();
@@ -394,45 +387,46 @@ let startGame = () => {
   });
 }
 
-// ゲームオーバー画面を表示する
-let stopGameCanvas = () => {
-  collisionSound.pause();
+// ゲーム終了画面（ゲームオーバー・クリア共通）を描画する
+// titleText: 大見出し（例: "GAME OVER", "YOU WON"）
+// actionText: リトライ/リプレイボタンのラベル（例: "RETRY", "REPLAY"）
+let drawEndScreen = (titleText, actionText) => {
   startSound.play();
   ctx.fillStyle = 'black';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(kong_Image,   canvas.width - kong_Image.width * 3.7, canvas.height / 2 - banner_Image.height);
   ctx.drawImage(hammer_Image, canvas.width / 2 - 70,                 canvas.height / 2 - 15);
 
-  // GAME OVER テキスト
+  // 大見出しテキスト
   ctx.save();
-  ctx.font      = '24px GAME GAME';
+  ctx.font      = FONT_TITLE;
   ctx.fillStyle = 'green';
-  ctx.strokeText(`GAME OVER`, canvas.width / 2,      canvas.height / 2);
-  ctx.fillText(`GAME OVER`,   canvas.width / 2 - 60, canvas.height / 2 - 80);
+  ctx.strokeText(titleText, canvas.width / 2,      canvas.height / 2);
+  ctx.fillText(titleText,   canvas.width / 2 - 60, canvas.height / 2 - 80);
   ctx.restore();
 
   // スコア表示
   ctx.save();
-  ctx.font      = '18px STOP GAME';
+  ctx.font      = FONT_BODY;
   ctx.fillStyle = 'white';
   ctx.fillText(`Scored : ` + score, canvas.width / 2 - 30, canvas.height / 2 - 50);
   ctx.restore();
 
-  // RETRY テキスト
+  // リトライ/リプレイテキスト
   ctx.save();
-  ctx.font      = '24px STOP GAME';
+  ctx.font      = FONT_TITLE;
   ctx.fillStyle = 'red';
-  ctx.strokeText(`RETRY`, canvas.width / 2,      canvas.height / 2);
-  ctx.fillText(`RETRY`,   canvas.width / 2 - 20, canvas.height / 2);
+  ctx.strokeText(actionText, canvas.width / 2,      canvas.height / 2);
+  ctx.fillText(actionText,   canvas.width / 2 - 20, canvas.height / 2);
   ctx.restore();
 
   ctx.save();
-  ctx.font      = '18px STOP GAME';
+  ctx.font      = FONT_BODY;
   ctx.fillStyle = 'white';
   ctx.fillText(`Press Enter.`, canvas.width / 2 - 30, canvas.height / 2 + 130);
   ctx.restore();
 
-  // Enterキーでリトライを可能にする
+  // Enterキーでリトライ/リプレイを可能にする
   document.onkeypress = (e) => {
     if (e.keyCode == 13 && isGameOver) {
       startGame();
@@ -440,57 +434,19 @@ let stopGameCanvas = () => {
       isGameOver   = false;
       ismarioalive = true;
     }
-  }
+  };
+}
+
+// ゲームオーバー画面を表示する
+let stopGameCanvas = () => {
+  collisionSound.pause();
+  drawEndScreen('GAME OVER', 'RETRY');
 }
 
 // クリア画面を表示する
 let gameWonCanvas = () => {
   isGameOver = true;
-
-  startSound.play();
-  ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(kong_Image,   canvas.width - kong_Image.width * 3.7, canvas.height / 2 - banner_Image.height);
-  ctx.drawImage(hammer_Image, canvas.width / 2 - 70,                 canvas.height / 2 - 15);
-
-  // YOU WON テキスト
-  ctx.save();
-  ctx.font      = '24px YOU WON';
-  ctx.fillStyle = 'green';
-  ctx.strokeText(`YOU WON`, canvas.width / 2,      canvas.height / 2);
-  ctx.fillText(`YOU WON`,   canvas.width / 2 - 60, canvas.height / 2 - 80);
-  ctx.restore();
-
-  // スコア表示
-  ctx.save();
-  ctx.font      = '18px STOP GAME';
-  ctx.fillStyle = 'white';
-  ctx.fillText(`Scored : ` + score, canvas.width / 2 - 30, canvas.height / 2 - 50);
-  ctx.restore();
-
-  // REPLAY テキスト
-  ctx.save();
-  ctx.font      = '24px STOP GAME';
-  ctx.fillStyle = 'red';
-  ctx.strokeText(`REPLAY`, canvas.width / 2,      canvas.height / 2);
-  ctx.fillText(`REPLAY`,   canvas.width / 2 - 20, canvas.height / 2);
-  ctx.restore();
-
-  ctx.save();
-  ctx.font      = '18px STOP GAME';
-  ctx.fillStyle = 'white';
-  ctx.fillText(`Press Enter.`, canvas.width / 2 - 30, canvas.height / 2 + 130);
-  ctx.restore();
-
-  // Enterキーでリプレイを可能にする
-  document.onkeypress = (e) => {
-    if (e.keyCode == 13 && isGameOver) {
-      startGame();
-      updateAll();
-      isGameOver   = false;
-      ismarioalive = true;
-    }
-  }
+  drawEndScreen('YOU WON', 'REPLAY');
 }
 
 startGameCanvas();

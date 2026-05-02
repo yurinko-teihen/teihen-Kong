@@ -3,19 +3,22 @@
 // マリオが走り回る足場オブジェクトを管理する
 // ============================================================
 
+// プラットフォーム画像を全インスタンスで共有する（複数の new Image() を避ける）
+const _platformImage = new Image();
+_platformImage.src = 'images/Floor.png';
+
 class PLATFORM {
   constructor(positionX, positionY, width = 35) {
     this.positionX      = positionX;
     this.positionY      = positionY;
     this.width          = width; // 画像1枚分の横幅を何回繰り返すか（タイル数）
-    this.platform_Image = new Image();
-    this.platform_Image.src = 'images/Floor.png';
+    this.platform_Image = _platformImage;
   }
 
   // プラットフォームをキャンバスに描画する（横方向にタイルを繰り返す）
   draw() {
     ctx.beginPath();
-    var pattern = ctx.createPattern(this.platform_Image, "repeat-x");
+    const pattern = ctx.createPattern(this.platform_Image, "repeat-x");
     ctx.fillStyle = pattern;
     ctx.save();
     ctx.translate(this.positionX, this.positionY);

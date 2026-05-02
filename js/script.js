@@ -311,8 +311,12 @@ let afterGameWon = () => {
 
 // マリオの状態をリセットする（リトライ・スタート時）
 let updateAll = () => {
-  marioPlayer.positionX = MARIO_INIT_X;
-  marioPlayer.positionY = MARIO_INIT_Y;
+  marioPlayer.positionX  = MARIO_INIT_X;
+  marioPlayer.positionY  = MARIO_INIT_Y;
+  marioPlayer.velocityY  = 0;
+  marioPlayer.jumping    = true;
+  marioPlayer.isOnLadder = false;
+  GRAVITY                = GRAVITY_DEFAULT;
   score         = 0;
   marioLives    = DIFFICULTIES[selectedDifficultyIndex].lives;
   ismariostar   = false;

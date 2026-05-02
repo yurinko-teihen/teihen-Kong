@@ -43,8 +43,8 @@ class MARIO {
     this.positionY = mario.positionY;
     this.velocityY = mario.velocityY;
     this.velocityX = mario.velocityX;
-    this.jumping   = true;
-    this.ladder    = true;
+    this.jumping    = true;
+    this.isOnLadder = false; // ハシゴ昇降中フラグ（初期値: false。ループで毎フレームリセットされる）
     this.indexmario       = 0; // 通常マリオのアニメーションフレーム
     this.indexmariohammer = 0; // ハンマー装備時のアニメーションフレーム
     // 現在いるプラットフォームの右端X座標（右移動の限界として使用）
@@ -155,6 +155,10 @@ class MARIO {
       return;
     }
 
+    // ハシゴ上の状態をセット。落下速度をリセットして床突き抜けを防ぐ
+    this.isOnLadder = true;
+    this.velocityY  = 0;
+
     // ハシゴ上は重力を無効にして上昇する
     GRAVITY    = GRAVITY_ON_LADDER;
     stopOffset = LADDER_CLIMB_SPEED;
@@ -205,8 +209,10 @@ class MARIO {
         this.positionX < (ladderArray[this.indexnext].positionX + ladder_Image.width) &&
         this.positionY + marioFeetOffset > selectedLadderTop - COLLISION_MARGIN_Y_TOP &&
         this.positionY < selectedLadderTop + selectedLadderHeight) {
-      GRAVITY    = GRAVITY_ON_LADDER;
-      stopOffset = LADDER_CLIMB_SPEED;
+      GRAVITY         = GRAVITY_ON_LADDER;
+      stopOffset      = LADDER_CLIMB_SPEED;
+      this.isOnLadder = true;  // ハシゴ昇降中フラグをセット
+      this.velocityY  = 0;     // 落下速度をリセットして床突き抜けを防ぐ
       // 最上段のプラットフォームより上には移動しない
       if (this.positionY == 76) {
         stopOffset = 0;
@@ -330,18 +336,10 @@ let loop = function() {
   // 次フレームをスケジュール（先頭で登録することで cancelAnimationFrame が確実に機能する）
   rafId = window.requestAnimationFrame(loop);
 
-  // 左右移動と効果音（ハシゴ昇降中は横移動禁止）
-  const canMoveHorizontally = GRAVITY !== GRAVITY_ON_LADDER;
-  if (controller.left && canMoveHorizontally) {
-    marioPlayer.moveLeft();
-    walkingSound.play();
-  }
-  if (controller.right && canMoveHorizontally) {
-    marioPlayer.moveRight();
-    walkingSound.play();
-  }
+  // ハシゴ昇降フラグをフレーム毎にリセット（moveUp/moveDown が true に設定する）
+  marioPlayer.isOnLadder = false;
 
-  // ハシゴの昇降（ジャンプ判定より先に処理し、ハシゴ上でのジャンプ貫通を防ぐ）
+  // ハシゴの昇降（横移動・ジャンプ判定より先に処理する）
   // velocityY < 0（上昇中）のときは moveUp を無効化し、ジャンプへの余分な上昇力を防ぐ
   if (controller.moveUp && marioPlayer.velocityY >= 0) {
     ladderArray.forEach((eachladder) => {
@@ -356,8 +354,25 @@ let loop = function() {
     });
   }
 
-  // ジャンプ入力（地面にいるときのみ有効・ハシゴ昇降中は GRAVITY=0 のため無効）
-  if (controller.jump && marioPlayer.jumping == false && GRAVITY != 0) {
+  // ハシゴから離れた場合（キーを離した・ハシゴ範囲外）は GRAVITY を復元する。
+  // これによりハシゴキーを離した後に重力ゼロのまま浮遊する問題を防ぐ。
+  if (!marioPlayer.isOnLadder && GRAVITY === GRAVITY_ON_LADDER) {
+    GRAVITY = marioPlayer.jumping ? GRAVITY_DEFAULT : GRAVITY_ON_PLATFORM;
+  }
+
+  // 左右移動と効果音（ハシゴ昇降中は横移動禁止）
+  const canMoveHorizontally = !marioPlayer.isOnLadder;
+  if (controller.left && canMoveHorizontally) {
+    marioPlayer.moveLeft();
+    walkingSound.play();
+  }
+  if (controller.right && canMoveHorizontally) {
+    marioPlayer.moveRight();
+    walkingSound.play();
+  }
+
+  // ジャンプ入力（地面にいるとき、かつハシゴ上でないときのみ有効）
+  if (controller.jump && marioPlayer.jumping === false && !marioPlayer.isOnLadder) {
     marioPlayer.velocityY -= JUMP_VELOCITY;
     marioPlayer.jumping = true;
   }
@@ -378,9 +393,12 @@ let loop = function() {
       afterCollision();
     } else {
       // ライフが残っている場合は初期位置に戻す
-      marioPlayer.positionX = MARIO_INIT_X;
-      marioPlayer.positionY = MARIO_INIT_Y;
-      marioPlayer.velocityY = 0;
+      marioPlayer.positionX  = MARIO_INIT_X;
+      marioPlayer.positionY  = MARIO_INIT_Y;
+      marioPlayer.velocityY  = 0;
+      marioPlayer.jumping    = true;
+      marioPlayer.isOnLadder = false;
+      GRAVITY                = GRAVITY_DEFAULT;
     }
   }
 

@@ -215,10 +215,17 @@ class MARIO {
       return;
     }
 
-    // 着地判定：落下中にプラットフォーム上面を通過（または貫通）したとき
-    // feetY >= platformTop で足がプラットフォーム上面に達したことを検出し、
-    // 高速落下で1フレームに貫通した場合も COLLISION_MARGIN_Y_TOP の範囲内で確実に捕捉する
-    if (feetY >= platformTop &&
+    // 着地判定：上から落下中にプラットフォーム上面を通過（または貫通）したとき
+    // prevFeetY <= platformTop で前フレームの足がプラットフォーム上面以上にあったことを確認し、
+    // 下からのジャンプによる誤検知（床すり抜け）を防ぐ
+    //
+    // velocityY はフリクション適用後の値。フリクション適用前（位置更新に使用した値）は
+    // velocityY / FRICTION で復元できる。これがそのフレームの移動量（ステップサイズ）になる。
+    // 落下中（velocityY >= 0）のみ使用するため、符号の問題は発生しない。
+    const step = this.velocityY / FRICTION;
+    const prevFeetY = feetY - step;
+    if (prevFeetY <= platformTop &&
+        feetY >= platformTop &&
         this.positionY < platformTop + COLLISION_MARGIN_Y_TOP &&
         this.positionY > platformTop - COLLISION_JUMP_RANGE &&
         this.velocityY >= 0) {

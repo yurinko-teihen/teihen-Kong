@@ -67,7 +67,7 @@ let hammer_Image       = new Image();
 banner_Image.src       = "./images/donkeykongbanner.png";
 orangebarrel_Image.src = "./images/Barrel0.png";
 kong_Image.src         = "./images/DKGrin-1.png";
-hammer_Image.src       = "./images/Hammermain.png";
+hammer_Image.src       = "./images/star.svg";
 
 // === サウンドリソース ===
 let walkingSound   = new Audio('./sounds/walking2.wav'),
@@ -155,22 +155,29 @@ let gameWon = () => {
   }
 }
 
-// ハンマー取得判定（マリオがハンマーに触れたとき）
+// スター取得判定（マリオがスターに触れたとき）
 let hammerCollision = (eachhammer) => {
   let index = 0;
+  const starW = single_width  * SPRITE_SCALE;
+  const starH = single_height * SPRITE_SCALE;
 
-  if (marioPlayer.positionX < eachhammer.positionX + hammer_Image.width &&
+  if (marioPlayer.positionX < eachhammer.positionX + starW &&
       marioPlayer.positionX + single_width > eachhammer.positionX &&
-      marioPlayer.positionY < eachhammer.positionY + hammer_Image.height &&
+      marioPlayer.positionY < eachhammer.positionY + starH &&
       marioPlayer.positionY + single_height > eachhammer.positionY) {
-    // ハンマーを配列から削除し、ハンマー状態をONにする
+    // スターを配列から削除し、スター状態をONにする
     index = hammerArray.indexOf(eachhammer);
     hammerArray.splice(index, 1);
     ismariohammer = true;
 
-    // HAMMER_DURATION ms後にハンマー状態を解除する
-    setTimeout(() => {
+    // 既存のタイマーをクリアして時間をリセットする
+    if (hammerTimerId !== null) {
+      clearTimeout(hammerTimerId);
+    }
+    // HAMMER_DURATION ms後にスター状態を解除する
+    hammerTimerId = setTimeout(() => {
       ismariohammer = false;
+      hammerTimerId = null;
     }, HAMMER_DURATION);
   }
 }
@@ -229,6 +236,7 @@ let displayScore = () => {
 
 // === タル管理 ===
 let rafId; // 物理ループ（requestAnimationFrame）のフレームID
+let hammerTimerId = null; // スター効果タイマーのハンドル（リセット用）
 let barrelArrayLadder = [];
 let barrelArraynext   = [];
 let barrelpositionanimate,
@@ -334,7 +342,7 @@ let drawStartScreen = () => {
   ctx.save();
   ctx.font      = '18px Arial';
   ctx.fillStyle = 'yellow';
-  ctx.fillText(`v1.5`, canvas.width - 40, canvas.height - 10);
+  ctx.fillText(`v1.6`, canvas.width - 40, canvas.height - 10);
   ctx.restore();
 
   // START GAME テキスト

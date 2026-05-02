@@ -1,10 +1,10 @@
 // ============================================================
-// hammer.js - ハンマーオブジェクトの定義
-// マリオが取得できるハンマーアイテムを管理する
+// hammer.js - スターオブジェクトの定義
+// マリオが取得できるスターアイテムを管理する
 // ============================================================
 
 let hammermario_Image = new Image();
-hammermario_Image.src = "./images/Hammer.png";
+hammermario_Image.src = "./images/star.svg";
 
 class HAMMER {
   constructor(positionX, positionY) {
